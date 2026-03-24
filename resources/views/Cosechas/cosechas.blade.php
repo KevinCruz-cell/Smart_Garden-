@@ -1,10 +1,10 @@
-{{-- resources/views/siembras.blade.php --}}
+{{-- resources/views/Cosechas/cosechas.blade.php --}}
     <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siembras - SmartGarden</title>
+    <title>Cosechas - SmartGarden</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -37,7 +37,7 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: var(--fondo);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             color: #333;
             overflow-x: hidden;
         }
@@ -165,6 +165,7 @@
             font-size: 1.5rem;
             color: #666;
             transition: var(--transicion);
+            text-decoration: none;
         }
 
         .notification-badge:hover {
@@ -183,20 +184,31 @@
             border-radius: 10px;
         }
 
+        .dropdown-menu {
+            border: none;
+            box-shadow: var(--sombra-media);
+            border-radius: 15px;
+            padding: 10px 0;
+            margin-top: 10px;
+        }
+
+        .dropdown-item {
+            padding: 10px 20px;
+            transition: var(--transicion);
+        }
+
+        .dropdown-item:hover {
+            background: rgba(46,125,50,0.05);
+            color: var(--verde-hoja);
+        }
+
         .user-profile {
             display: flex;
             align-items: center;
             gap: 10px;
-            cursor: pointer;
             padding: 5px 15px;
             border-radius: 50px;
-            transition: var(--transicion);
             background: #f5f5f5;
-        }
-
-        .user-profile:hover {
-            background: #e0e0e0;
-            transform: translateY(-2px);
         }
 
         .user-profile img {
@@ -212,7 +224,7 @@
 
         /* Botones */
         .btn-naranja {
-            background: var(--naranja);
+            background: linear-gradient(135deg, var(--naranja), var(--naranja-oscuro));
             color: white;
             border: none;
             padding: 10px 25px;
@@ -222,12 +234,13 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            text-decoration: none;
         }
 
         .btn-naranja:hover {
-            background: var(--naranja-oscuro);
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(255,152,0,0.3);
+            color: white;
         }
 
         .btn-outline-verde {
@@ -238,6 +251,8 @@
             border-radius: 50px;
             font-weight: 600;
             transition: var(--transicion);
+            text-decoration: none;
+            display: inline-block;
         }
 
         .btn-outline-verde:hover {
@@ -245,6 +260,29 @@
             color: white;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(46,125,50,0.3);
+        }
+
+        .btn-cerrar-sesion {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transicion);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            box-shadow: 0 10px 20px rgba(220,53,69,0.3);
+        }
+
+        .btn-cerrar-sesion:hover {
+            background: #b02a37;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(220,53,69,0.4);
+            color: white;
         }
 
         /* Tarjetas de resumen */
@@ -307,14 +345,92 @@
             transform: rotate(5deg) scale(1.1);
         }
 
-        /* Tabla de siembras */
+        /* Filtros */
+        .filters-panel {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: var(--sombra-suave);
+            transition: var(--transicion);
+            margin-bottom: 30px;
+        }
+
+        .filters-panel:hover {
+            box-shadow: var(--sombra-media);
+        }
+
+        .filters-panel h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--verde-hoja);
+            margin-bottom: 20px;
+        }
+
+        .filters-panel h3 i {
+            margin-right: 10px;
+            color: var(--naranja);
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            align-items: end;
+        }
+
+        .filter-group label {
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        .filter-group select, .filter-group input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            transition: var(--transicion);
+            outline: none;
+        }
+
+        .filter-group select:focus, .filter-group input:focus {
+            border-color: var(--verde-hoja);
+            box-shadow: 0 0 0 3px rgba(46,125,50,0.1);
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        /* Mensajes de alerta */
+        .alert {
+            border-radius: 50px;
+            padding: 15px 25px;
+            border: none;
+            margin-bottom: 20px;
+        }
+
+        .alert-success {
+            background: rgba(46,125,50,0.1);
+            color: var(--verde-hoja);
+            border: 1px solid rgba(46,125,50,0.2);
+        }
+
+        .alert-danger {
+            background: rgba(220,53,69,0.1);
+            color: #dc3545;
+            border: 1px solid rgba(220,53,69,0.2);
+        }
+
+        /* Tabla de cosechas */
         .table-container {
             background: white;
             border-radius: 20px;
             padding: 25px;
             box-shadow: var(--sombra-suave);
             transition: var(--transicion);
-            margin-top: 30px;
         }
 
         .table-container:hover {
@@ -408,28 +524,24 @@
             background: rgba(46,125,50,0.02);
         }
 
-        tr:hover td {
-            background: rgba(46,125,50,0.02);
-        }
-
-        .badge-estado {
+        .badge-calidad {
             padding: 5px 12px;
             border-radius: 50px;
             font-size: 0.85rem;
             font-weight: 600;
         }
 
-        .badge-activa {
+        .badge-excelente {
             background: rgba(46,125,50,0.1);
             color: var(--verde-hoja);
         }
 
-        .badge-cosechada {
+        .badge-buena {
             background: rgba(255,152,0,0.1);
             color: var(--naranja-oscuro);
         }
 
-        .badge-problema {
+        .badge-regular {
             background: rgba(220,53,69,0.1);
             color: #dc3545;
         }
@@ -445,6 +557,7 @@
             transition: var(--transicion);
             margin: 0 3px;
             border: none;
+            text-decoration: none;
         }
 
         .action-btn.ver {
@@ -462,6 +575,40 @@
         .action-btn:hover {
             transform: scale(1.15);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Estado vacío */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--sombra-suave);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: #999;
+            margin-bottom: 20px;
+        }
+
+        /* Botón de cerrar sesión al final */
+        .logout-section {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid rgba(46,125,50,0.1);
         }
 
         /* Responsive */
@@ -494,15 +641,15 @@
         </div>
         <div class="sidebar-menu">
             <ul>
-                <li><a href="/dashboard"><i class="fas fa-home"></i> Vista general</a></li>
-                <li><a href="/cultivos"><i class="fas fa-seedling"></i> Cultivos</a></li>
-                <li><a href="#" class="active"><i class="fas fa-sprout"></i> Siembras</a></li>
-                <li><a href="#"><i class="fas fa-thermometer-half"></i> Monitoreo</a></li>
-                <li><a href="#"><i class="fas fa-bell"></i> Alertas</a></li>
-                <li><a href="#"><i class="fas fa-file-alt"></i> Reportes</a></li>
-                <li><a href="#"><i class="fas fa-carrot"></i> Cosechas</a></li>
-                <li><a href="#"><i class="fas fa-chart-bar"></i> Evaluaciones</a></li>
-                <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
+                <li><a href="{{ route('dashboard') }}"><i class="fas fa-home"></i> Vista general</a></li>
+                <li><a href="{{ route('cultivos.index') }}"><i class="fas fa-seedling"></i> Cultivos</a></li>
+                <li><a href="{{ route('siembras.index') }}"><i class="fas fa-sprout"></i> Siembras</a></li>
+                <li><a href="{{ route('monitoreo.index') }}"><i class="fas fa-thermometer-half"></i> Monitoreo</a></li>
+                <li><a href="{{ route('alertas.index') }}"><i class="fas fa-bell"></i> Alertas</a></li>
+                <li><a href="{{ route('reportes.index') }}"><i class="fas fa-file-alt"></i> Reportes</a></li>
+                <li><a href="{{ route('cosechas.index') }}" class="active"><i class="fas fa-carrot"></i> Cosechas</a></li>
+                <li><a href="{{ route('evaluaciones.index') }}"><i class="fas fa-chart-bar"></i> Evaluaciones</a></li>
+                <li><a href="{{ route('configuracion.index') }}"><i class="fas fa-cog"></i> Configuración</a></li>
             </ul>
         </div>
     </div>
@@ -512,49 +659,70 @@
         <!-- Header -->
         <div class="dashboard-header" data-aos="fade-down" data-aos-duration="1000">
             <div class="header-title">
-                <h1>Control de Siembras</h1>
-                <p>Gestiona todas tus siembras activas e históricas</p>
+                <h1>Registro de Cosechas</h1>
+                <p>Gestiona las cosechas obtenidas de tus cultivos</p>
             </div>
             <div class="header-actions">
-                <a href="#" class="notification-badge">
+                <a href="{{ route('alertas.index') }}" class="notification-badge">
                     <i class="fas fa-bell"></i>
-                    <span>3</span>
+                    @php
+                        $alertasCount = \App\Models\Alerta::where('user_id', auth()->id())->where('estado', 'Pendiente')->count();
+                    @endphp
+                    @if($alertasCount > 0)
+                        <span>{{ $alertasCount }}</span>
+                    @endif
                 </a>
+
+                <!-- Perfil de usuario (solo visual) -->
                 <div class="user-profile">
-                    <img src="https://ui-avatars.com/api/?name=Christopher+Kevin&background=2E7D32&color=fff&size=40" alt="Profile">
-                    <span>Christopher</span>
-                    <i class="fas fa-chevron-down"></i>
+                    <img src="{{ auth()->user()->avatar }}" alt="Profile">
+                    <span>{{ auth()->user()->nombre }}</span>
                 </div>
             </div>
         </div>
+
+        <!-- Mensajes de sesión -->
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
         <!-- Stats Cards -->
         <div class="stats-grid">
             <div class="stat-card" data-aos="fade-up" data-aos-delay="50">
                 <div class="stat-info">
-                    <h3>12</h3>
-                    <p>Siembras activas</p>
-                    <small>En crecimiento</small>
+                    <h3>{{ $stats['total'] }}</h3>
+                    <p>Cosechas totales</p>
+                    <small>Histórico</small>
                 </div>
                 <div class="stat-icon">
-                    <i class="fas fa-sprout"></i>
+                    <i class="fas fa-carrot"></i>
                 </div>
             </div>
             <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
                 <div class="stat-info">
-                    <h3>45</h3>
-                    <p>Siembras totales</p>
-                    <small>Histórico</small>
+                    <h3>{{ number_format($stats['peso_total'], 1) }} kg</h3>
+                    <p>Peso total</p>
+                    <small>Último mes</small>
                 </div>
                 <div class="stat-icon">
-                    <i class="fas fa-history"></i>
+                    <i class="fas fa-weight-scale"></i>
                 </div>
             </div>
             <div class="stat-card" data-aos="fade-up" data-aos-delay="150">
                 <div class="stat-info">
-                    <h3>8</h3>
-                    <p>Por cosechar</p>
-                    <small>Próximos 15 días</small>
+                    <h3>{{ $stats['pendientes'] }}</h3>
+                    <p>Cosechas pendientes</p>
+                    <small>Próximos 7 días</small>
                 </div>
                 <div class="stat-icon">
                     <i class="fas fa-calendar-check"></i>
@@ -562,150 +730,135 @@
             </div>
             <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
                 <div class="stat-info">
-                    <h3>2</h3>
-                    <p>Con problemas</p>
-                    <small>Revisar</small>
+                    <h3>{{ $stats['calidad_promedio'] ? round($stats['calidad_promedio'] * 100) . '%' : '0%' }}</h3>
+                    <p>Calidad promedio</p>
+                    <small>Excelente</small>
                 </div>
                 <div class="stat-icon">
-                    <i class="fas fa-exclamation-triangle"></i>
+                    <i class="fas fa-star"></i>
                 </div>
             </div>
         </div>
 
-        <!-- Tabla de siembras -->
-        <div class="table-container" data-aos="fade-up" data-aos-delay="100">
+        <!-- Filtros -->
+        <div class="filters-panel" data-aos="fade-up" data-aos-delay="100">
+            <h3><i class="fas fa-sliders-h"></i> Filtrar cosechas</h3>
+            <form action="{{ route('cosechas.index') }}" method="GET">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label>Cultivo</label>
+                        <select name="cultivo">
+                            <option value="">Todos</option>
+                            @php
+                                $cultivos = \App\Models\Cultivo::all();
+                            @endphp
+                            @foreach($cultivos as $cultivo)
+                                <option value="{{ $cultivo->id }}" {{ request('cultivo') == $cultivo->id ? 'selected' : '' }}>{{ $cultivo->nombre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Desde</label>
+                        <input type="date" name="desde" value="{{ request('desde', now()->startOfMonth()->format('Y-m-d')) }}">
+                    </div>
+                    <div class="filter-group">
+                        <label>Hasta</label>
+                        <input type="date" name="hasta" value="{{ request('hasta', now()->format('Y-m-d')) }}">
+                    </div>
+                    <div class="filter-group">
+                        <label>Calidad</label>
+                        <select name="calidad">
+                            <option value="">Todas</option>
+                            <option value="Excelente" {{ request('calidad') == 'Excelente' ? 'selected' : '' }}>Excelente</option>
+                            <option value="Buena" {{ request('calidad') == 'Buena' ? 'selected' : '' }}>Buena</option>
+                            <option value="Regular" {{ request('calidad') == 'Regular' ? 'selected' : '' }}>Regular</option>
+                            <option value="Mala" {{ request('calidad') == 'Mala' ? 'selected' : '' }}>Mala</option>
+                        </select>
+                    </div>
+                    <div class="filter-actions">
+                        <button type="submit" class="btn-naranja"><i class="fas fa-filter"></i> Aplicar</button>
+                        <a href="{{ route('cosechas.index') }}" class="btn-outline-verde"><i class="fas fa-redo"></i> Limpiar</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Tabla de cosechas -->
+        <div class="table-container" data-aos="fade-up" data-aos-delay="200">
             <div class="table-header">
-                <h2><i class="fas fa-sprout"></i> Listado de Siembras</h2>
+                <h2><i class="fas fa-carrot"></i> Listado de cosechas</h2>
                 <div class="d-flex gap-3">
                     <div class="search-box">
-                        <input type="text" placeholder="Buscar siembra...">
+                        <input type="text" id="searchInput" placeholder="Buscar cosecha..." onkeyup="buscarCosechas()">
                         <button><i class="fas fa-search"></i></button>
                     </div>
-                    <button class="btn-naranja">
-                        <i class="fas fa-plus"></i> Nueva Siembra
-                    </button>
+                    <a href="{{ route('cosechas.create') }}" class="btn-naranja">
+                        <i class="fas fa-plus"></i> Nueva Cosecha
+                    </a>
                 </div>
             </div>
             <div class="table-responsive">
-                <table>
+                <table id="cosechasTable">
                     <thead>
                     <tr>
                         <th>ID</th>
                         <th>Cultivo</th>
-                        <th>Fecha Siembra</th>
+                        <th>Fecha cosecha</th>
+                        <th>Cantidad (kg)</th>
+                        <th>Calidad</th>
                         <th>Módulo</th>
-                        <th>Estado</th>
-                        <th>Progreso</th>
-                        <th>Fecha Estimada Cosecha</th>
+                        <th>Observaciones</th>
                         <th>Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>#001</td>
-                        <td>Lechuga</td>
-                        <td>15/02/2025</td>
-                        <td>Módulo 1</td>
-                        <td><span class="badge-estado badge-activa">Activa</span></td>
-                        <td>
-                            <div class="progress" style="height: 8px; width: 100px;">
-                                <div class="progress-bar bg-success" style="width: 60%"></div>
-                            </div>
-                        </td>
-                        <td>15/03/2025</td>
-                        <td>
-                            <button class="action-btn ver"><i class="fas fa-eye"></i></button>
-                            <button class="action-btn editar"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn eliminar"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#002</td>
-                        <td>Espinaca</td>
-                        <td>20/02/2025</td>
-                        <td>Módulo 2</td>
-                        <td><span class="badge-estado badge-activa">Activa</span></td>
-                        <td>
-                            <div class="progress" style="height: 8px; width: 100px;">
-                                <div class="progress-bar bg-success" style="width: 30%"></div>
-                            </div>
-                        </td>
-                        <td>20/03/2025</td>
-                        <td>
-                            <button class="action-btn ver"><i class="fas fa-eye"></i></button>
-                            <button class="action-btn editar"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn eliminar"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#003</td>
-                        <td>Tomate Cherry</td>
-                        <td>10/02/2025</td>
-                        <td>Módulo 4</td>
-                        <td><span class="badge-estado badge-activa">Activa</span></td>
-                        <td>
-                            <div class="progress" style="height: 8px; width: 100px;">
-                                <div class="progress-bar bg-success" style="width: 80%"></div>
-                            </div>
-                        </td>
-                        <td>10/04/2025</td>
-                        <td>
-                            <button class="action-btn ver"><i class="fas fa-eye"></i></button>
-                            <button class="action-btn editar"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn eliminar"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#004</td>
-                        <td>Albahaca</td>
-                        <td>05/02/2025</td>
-                        <td>Módulo 3</td>
-                        <td><span class="badge-estado badge-cosechada">Cosechada</span></td>
-                        <td>
-                            <div class="progress" style="height: 8px; width: 100px;">
-                                <div class="progress-bar bg-warning" style="width: 100%"></div>
-                            </div>
-                        </td>
-                        <td>05/03/2025</td>
-                        <td>
-                            <button class="action-btn ver"><i class="fas fa-eye"></i></button>
-                            <button class="action-btn editar"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn eliminar"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#005</td>
-                        <td>Lechuga</td>
-                        <td>01/03/2025</td>
-                        <td>Módulo 1</td>
-                        <td><span class="badge-estado badge-problema">Problema</span></td>
-                        <td>
-                            <div class="progress" style="height: 8px; width: 100px;">
-                                <div class="progress-bar bg-danger" style="width: 15%"></div>
-                            </div>
-                        </td>
-                        <td>01/04/2025</td>
-                        <td>
-                            <button class="action-btn ver"><i class="fas fa-eye"></i></button>
-                            <button class="action-btn editar"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn eliminar"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
+                    @forelse($cosechas as $cosecha)
+                        <tr data-cultivo="{{ strtolower($cosecha->siembra->cultivo->nombre ?? '') }}">
+                            <td>#COS-{{ str_pad($cosecha->id, 3, '0', STR_PAD_LEFT) }}</td>
+                            <td>{{ $cosecha->siembra->cultivo->nombre ?? 'N/A' }}</td>
+                            <td>{{ $cosecha->fecha_cosecha->format('d/m/Y') }}</td>
+                            <td>{{ number_format($cosecha->cantidad_kg, 1) }} kg</td>
+                            <td>
+                                <span class="badge-calidad
+                                    @if($cosecha->calidad == 'Excelente') badge-excelente
+                                    @elseif($cosecha->calidad == 'Buena') badge-buena
+                                    @else badge-regular
+                                    @endif">
+                                    {{ $cosecha->calidad }}
+                                </span>
+                            </td>
+                            <td>{{ $cosecha->siembra->modulo->nombre ?? 'N/A' }}</td>
+                            <td>{{ Str::limit($cosecha->observaciones, 30) }}</td>
+                            <td>
+                                <a href="{{ route('cosechas.show', $cosecha->id) }}" class="action-btn ver"><i class="fas fa-eye"></i></a>
+                                <a href="{{ route('cosechas.edit', $cosecha->id) }}" class="action-btn editar"><i class="fas fa-edit"></i></a>
+                                <form action="{{ route('cosechas.destroy', $cosecha->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('¿Eliminar esta cosecha?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="action-btn eliminar"><i class="fas fa-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="8" class="text-center py-5">
+                                <div class="empty-state">
+                                    <i class="fas fa-carrot"></i>
+                                    <h3>No hay cosechas registradas</h3>
+                                    <p>Registra tu primera cosecha usando el botón "Nueva Cosecha"</p>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
                     </tbody>
                 </table>
             </div>
             <div class="d-flex justify-content-end mt-3">
-                <nav>
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a class="page-link" href="#">Anterior</a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
-                    </ul>
-                </nav>
+                {{ $cosechas->links() }}
             </div>
         </div>
+
+        <!-- Botón de Cerrar Sesión -->
     </div>
 </div>
 
@@ -718,6 +871,22 @@
         once: true,
         offset: 50
     });
+
+    function buscarCosechas() {
+        let input = document.getElementById('searchInput');
+        let filter = input.value.toLowerCase();
+        let table = document.getElementById('cosechasTable');
+        let tr = table.getElementsByTagName('tr');
+
+        for (let i = 1; i < tr.length; i++) {
+            let cultivo = tr[i].getAttribute('data-cultivo');
+            if (cultivo && cultivo.includes(filter)) {
+                tr[i].style.display = '';
+            } else {
+                tr[i].style.display = 'none';
+            }
+        }
+    }
 </script>
 </body>
 </html>

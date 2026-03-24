@@ -542,10 +542,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/login">Iniciar sesión</a>
+                    <a class="nav-link" href="{{route('login')}}">Iniciar sesión</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/register">Registrarse</a>
+                    <a class="nav-link" href="{{route('register')}}">Registrarse</a>
                 </li>
             </ul>
         </div>
@@ -561,7 +561,7 @@
                 <h2 class="hero-subtitle" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Tu huerto en casa, sin excusas</h2>
                 <p class="hero-text" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">Cultiva tus propias hortalizas frescas en espacios reducidos. Monitoreo por ciclos cada 15 minutos, ideal para familias que quieren alimentos sanos y sostenibles.</p>
                 <div class="hero-buttons" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
-                    <a href="/register" class="btn btn-custom btn-naranja me-3 mb-2">Comenzar Gratis <i class="fas fa-arrow-right ms-2"></i></a>
+                    <a href="{{route('register')}}" class="btn btn-custom btn-naranja me-3 mb-2">Comenzar Gratis <i class="fas fa-arrow-right ms-2"></i></a>
                     <a href="#caracteristicas" class="btn btn-custom btn-outline-light-custom mb-2">Ver características</a>
                 </div>
             </div>
@@ -651,7 +651,7 @@
         <div class="cta-content" data-aos="fade-up">
             <h2 class="cta-title">¿Listo para cultivar en casa?</h2>
             <p class="cta-text">Únete a cientos de familias que ya disfrutan de hortalizas frescas, cultivadas por ellos mismos con la ayuda de SmartGarden.</p>
-            <a href="/register" class="btn cta-button">Comenzar ahora <i class="fas fa-rocket ms-2"></i></a>
+            <a href="{{route('register')}}" class="btn cta-button">Comenzar ahora <i class="fas fa-rocket ms-2"></i></a>
         </div>
     </div>
 </section>

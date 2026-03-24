@@ -1,10 +1,10 @@
-{{-- resources/views/cosechas.blade.php --}}
+{{-- resources/views/Evaluaciones/evaluaciones.blade.php --}}
     <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cosechas - SmartGarden</title>
+    <title>Evaluaciones - SmartGarden</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -37,7 +37,7 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: var(--fondo);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             color: #333;
             overflow-x: hidden;
         }
@@ -165,6 +165,7 @@
             font-size: 1.5rem;
             color: #666;
             transition: var(--transicion);
+            text-decoration: none;
         }
 
         .notification-badge:hover {
@@ -183,20 +184,31 @@
             border-radius: 10px;
         }
 
+        .dropdown-menu {
+            border: none;
+            box-shadow: var(--sombra-media);
+            border-radius: 15px;
+            padding: 10px 0;
+            margin-top: 10px;
+        }
+
+        .dropdown-item {
+            padding: 10px 20px;
+            transition: var(--transicion);
+        }
+
+        .dropdown-item:hover {
+            background: rgba(46,125,50,0.05);
+            color: var(--verde-hoja);
+        }
+
         .user-profile {
             display: flex;
             align-items: center;
             gap: 10px;
-            cursor: pointer;
             padding: 5px 15px;
             border-radius: 50px;
-            transition: var(--transicion);
             background: #f5f5f5;
-        }
-
-        .user-profile:hover {
-            background: #e0e0e0;
-            transform: translateY(-2px);
         }
 
         .user-profile img {
@@ -212,7 +224,7 @@
 
         /* Botones */
         .btn-naranja {
-            background: var(--naranja);
+            background: linear-gradient(135deg, var(--naranja), var(--naranja-oscuro));
             color: white;
             border: none;
             padding: 10px 25px;
@@ -222,12 +234,13 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            text-decoration: none;
         }
 
         .btn-naranja:hover {
-            background: var(--naranja-oscuro);
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(255,152,0,0.3);
+            color: white;
         }
 
         .btn-outline-verde {
@@ -238,6 +251,8 @@
             border-radius: 50px;
             font-weight: 600;
             transition: var(--transicion);
+            text-decoration: none;
+            display: inline-block;
         }
 
         .btn-outline-verde:hover {
@@ -307,7 +322,7 @@
             transform: rotate(5deg) scale(1.1);
         }
 
-        /* Filtros */
+        /* Panel de filtros */
         .filters-panel {
             background: white;
             border-radius: 20px;
@@ -366,7 +381,33 @@
             align-items: center;
         }
 
-        /* Tabla de cosechas */
+        /* Mensajes de alerta */
+        .alert {
+            border-radius: 50px;
+            padding: 15px 25px;
+            border: none;
+            margin-bottom: 20px;
+        }
+
+        .alert-success {
+            background: rgba(46,125,50,0.1);
+            color: var(--verde-hoja);
+            border: 1px solid rgba(46,125,50,0.2);
+        }
+
+        .alert-danger {
+            background: rgba(220,53,69,0.1);
+            color: #dc3545;
+            border: 1px solid rgba(220,53,69,0.2);
+        }
+
+        .alert-info {
+            background: rgba(100,181,246,0.1);
+            color: var(--azul-cielo);
+            border: 1px solid rgba(100,181,246,0.2);
+        }
+
+        /* Tabla de evaluaciones */
         .table-container {
             background: white;
             border-radius: 20px;
@@ -466,28 +507,24 @@
             background: rgba(46,125,50,0.02);
         }
 
-        tr:hover td {
-            background: rgba(46,125,50,0.02);
-        }
-
-        .badge-calidad {
+        .badge-rendimiento {
             padding: 5px 12px;
             border-radius: 50px;
             font-size: 0.85rem;
             font-weight: 600;
         }
 
-        .badge-excelente {
+        .badge-alto {
             background: rgba(46,125,50,0.1);
             color: var(--verde-hoja);
         }
 
-        .badge-buena {
+        .badge-medio {
             background: rgba(255,152,0,0.1);
             color: var(--naranja-oscuro);
         }
 
-        .badge-regular {
+        .badge-bajo {
             background: rgba(220,53,69,0.1);
             color: #dc3545;
         }
@@ -503,6 +540,7 @@
             transition: var(--transicion);
             margin: 0 3px;
             border: none;
+            text-decoration: none;
         }
 
         .action-btn.ver {
@@ -517,13 +555,35 @@
             background: #dc3545;
         }
 
-        .action-btn.descargar {
-            background: var(--naranja);
-        }
-
         .action-btn:hover {
             transform: scale(1.15);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Estado vacío */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--sombra-suave);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: #999;
+            margin-bottom: 20px;
         }
 
         /* Responsive */
@@ -556,15 +616,15 @@
         </div>
         <div class="sidebar-menu">
             <ul>
-                <li><a href="/dashboard"><i class="fas fa-home"></i> Vista general</a></li>
-                <li><a href="/cultivos"><i class="fas fa-seedling"></i> Cultivos</a></li>
-                <li><a href="/siembras"><i class="fas fa-sprout"></i> Siembras</a></li>
-                <li><a href="/monitoreo"><i class="fas fa-thermometer-half"></i> Monitoreo</a></li>
-                <li><a href="/alertas"><i class="fas fa-bell"></i> Alertas</a></li>
-                <li><a href="/reportes"><i class="fas fa-file-alt"></i> Reportes</a></li>
-                <li><a href="#" class="active"><i class="fas fa-carrot"></i> Cosechas</a></li>
-                <li><a href="/evaluaciones"><i class="fas fa-chart-bar"></i> Evaluaciones</a></li>
-                <li><a href="/configuracion"><i class="fas fa-cog"></i> Configuración</a></li>
+                <li><a href="{{ route('dashboard') }}"><i class="fas fa-home"></i> Vista general</a></li>
+                <li><a href="{{ route('cultivos.index') }}"><i class="fas fa-seedling"></i> Cultivos</a></li>
+                <li><a href="{{ route('siembras.index') }}"><i class="fas fa-sprout"></i> Siembras</a></li>
+                <li><a href="{{ route('monitoreo.index') }}"><i class="fas fa-thermometer-half"></i> Monitoreo</a></li>
+                <li><a href="{{ route('alertas.index') }}"><i class="fas fa-bell"></i> Alertas</a></li>
+                <li><a href="{{ route('reportes.index') }}"><i class="fas fa-file-alt"></i> Reportes</a></li>
+                <li><a href="{{ route('cosechas.index') }}"><i class="fas fa-carrot"></i> Cosechas</a></li>
+                <li><a href="{{ route('evaluaciones.index') }}" class="active"><i class="fas fa-chart-bar"></i> Evaluaciones</a></li>
+                <li><a href="{{ route('configuracion.index') }}"><i class="fas fa-cog"></i> Configuración</a></li>
             </ul>
         </div>
     </div>
@@ -574,216 +634,205 @@
         <!-- Header -->
         <div class="dashboard-header" data-aos="fade-down" data-aos-duration="1000">
             <div class="header-title">
-                <h1>Registro de Cosechas</h1>
-                <p>Gestiona las cosechas obtenidas de tus cultivos</p>
+                <h1>Evaluaciones de Rendimiento</h1>
+                <p>Analiza el rendimiento de tus siembras y cultivos</p>
             </div>
             <div class="header-actions">
-                <a href="#" class="notification-badge">
+                <a href="{{ route('alertas.index') }}" class="notification-badge">
                     <i class="fas fa-bell"></i>
-                    <span>3</span>
+                    @php
+                        $alertasCount = \App\Models\Alerta::where('user_id', auth()->id())->where('estado', 'Pendiente')->count();
+                    @endphp
+                    @if($alertasCount > 0)
+                        <span>{{ $alertasCount }}</span>
+                    @endif
                 </a>
+
+                <!-- Perfil de usuario (solo visual) -->
                 <div class="user-profile">
-                    <img src="https://ui-avatars.com/api/?name=Christopher+Kevin&background=2E7D32&color=fff&size=40" alt="Profile">
-                    <span>Christopher</span>
-                    <i class="fas fa-chevron-down"></i>
+                    <img src="{{ auth()->user()->avatar }}" alt="Profile">
+                    <span>{{ auth()->user()->nombre }}</span>
                 </div>
             </div>
         </div>
+
+        <!-- Mensajes de sesión -->
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if(session('info'))
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <i class="fas fa-info-circle me-2"></i>{{ session('info') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
         <!-- Stats Cards -->
         <div class="stats-grid">
             <div class="stat-card" data-aos="fade-up" data-aos-delay="50">
                 <div class="stat-info">
-                    <h3>24</h3>
-                    <p>Cosechas totales</p>
+                    <h3>{{ $stats['total'] }}</h3>
+                    <p>Evaluaciones totales</p>
                     <small>Histórico</small>
                 </div>
                 <div class="stat-icon">
-                    <i class="fas fa-carrot"></i>
+                    <i class="fas fa-chart-bar"></i>
                 </div>
             </div>
             <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
                 <div class="stat-info">
-                    <h3>18.5 kg</h3>
-                    <p>Peso total</p>
-                    <small>Último mes</small>
+                    <h3>{{ number_format($stats['promedio'], 1) }}</h3>
+                    <p>Promedio rendimiento</p>
+                    <small>/10</small>
                 </div>
                 <div class="stat-icon">
-                    <i class="fas fa-weight-scale"></i>
+                    <i class="fas fa-star"></i>
                 </div>
             </div>
             <div class="stat-card" data-aos="fade-up" data-aos-delay="150">
                 <div class="stat-info">
-                    <h3>6</h3>
-                    <p>Cosechas pendientes</p>
-                    <small>Próximos 7 días</small>
+                    <h3>{{ $stats['pendientes'] }}</h3>
+                    <p>Evaluaciones pendientes</p>
+                    <small>Este mes</small>
                 </div>
                 <div class="stat-icon">
-                    <i class="fas fa-calendar-check"></i>
+                    <i class="fas fa-clock"></i>
                 </div>
             </div>
             <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
                 <div class="stat-info">
-                    <h3>92%</h3>
-                    <p>Calidad promedio</p>
+                    <h3>{{ $stats['eficiencia'] ? round($stats['eficiencia']) . '%' : '0%' }}</h3>
+                    <p>Eficiencia general</p>
                     <small>Excelente</small>
                 </div>
                 <div class="stat-icon">
-                    <i class="fas fa-star"></i>
+                    <i class="fas fa-chart-line"></i>
                 </div>
             </div>
         </div>
 
         <!-- Filtros -->
         <div class="filters-panel" data-aos="fade-up" data-aos-delay="100">
-            <h3><i class="fas fa-sliders-h"></i> Filtrar cosechas</h3>
-            <div class="filter-row">
-                <div class="filter-group">
-                    <label>Cultivo</label>
-                    <select>
-                        <option>Todos</option>
-                        <option>Lechuga</option>
-                        <option>Espinaca</option>
-                        <option>Tomate cherry</option>
-                        <option>Albahaca</option>
-                    </select>
+            <h3><i class="fas fa-sliders-h"></i> Filtrar evaluaciones</h3>
+            <form action="{{ route('evaluaciones.index') }}" method="GET">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label>Cultivo</label>
+                        <select name="cultivo">
+                            <option value="">Todos</option>
+                            @foreach($cultivos as $cultivo)
+                                <option value="{{ $cultivo->id }}" {{ request('cultivo') == $cultivo->id ? 'selected' : '' }}>{{ $cultivo->nombre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Desde</label>
+                        <input type="date" name="desde" value="{{ request('desde', now()->startOfMonth()->format('Y-m-d')) }}">
+                    </div>
+                    <div class="filter-group">
+                        <label>Hasta</label>
+                        <input type="date" name="hasta" value="{{ request('hasta', now()->format('Y-m-d')) }}">
+                    </div>
+                    <div class="filter-group">
+                        <label>Rendimiento mínimo</label>
+                        <select name="rendimiento_min">
+                            <option value="">Todos</option>
+                            <option value="8" {{ request('rendimiento_min') == 8 ? 'selected' : '' }}>Alto (8-10)</option>
+                            <option value="5" {{ request('rendimiento_min') == 5 ? 'selected' : '' }}>Medio (5-7)</option>
+                            <option value="0" {{ request('rendimiento_min') == 0 ? 'selected' : '' }}>Bajo (0-4)</option>
+                        </select>
+                    </div>
+                    <div class="filter-actions">
+                        <button type="submit" class="btn-naranja"><i class="fas fa-filter"></i> Aplicar</button>
+                        <a href="{{ route('evaluaciones.index') }}" class="btn-outline-verde"><i class="fas fa-redo"></i> Limpiar</a>
+                    </div>
                 </div>
-                <div class="filter-group">
-                    <label>Desde</label>
-                    <input type="date" value="2025-03-01">
-                </div>
-                <div class="filter-group">
-                    <label>Hasta</label>
-                    <input type="date" value="2025-03-31">
-                </div>
-                <div class="filter-group">
-                    <label>Calidad</label>
-                    <select>
-                        <option>Todas</option>
-                        <option>Excelente</option>
-                        <option>Buena</option>
-                        <option>Regular</option>
-                    </select>
-                </div>
-                <div class="filter-actions">
-                    <button class="btn-naranja"><i class="fas fa-filter"></i> Aplicar</button>
-                    <button class="btn-outline-verde"><i class="fas fa-redo"></i> Limpiar</button>
-                </div>
-            </div>
+            </form>
         </div>
 
-        <!-- Tabla de cosechas -->
+        <!-- Tabla de evaluaciones -->
         <div class="table-container" data-aos="fade-up" data-aos-delay="200">
             <div class="table-header">
-                <h2><i class="fas fa-carrot"></i> Listado de cosechas</h2>
+                <h2><i class="fas fa-chart-bar"></i> Listado de evaluaciones</h2>
                 <div class="d-flex gap-3">
                     <div class="search-box">
-                        <input type="text" placeholder="Buscar cosecha...">
+                        <input type="text" id="searchInput" placeholder="Buscar evaluación..." onkeyup="buscarEvaluaciones()">
                         <button><i class="fas fa-search"></i></button>
                     </div>
-                    <button class="btn-naranja">
-                        <i class="fas fa-plus"></i> Nueva Cosecha
-                    </button>
+                    <a href="{{ route('evaluaciones.create') }}" class="btn-naranja">
+                        <i class="fas fa-plus"></i> Nueva Evaluación
+                    </a>
                 </div>
             </div>
             <div class="table-responsive">
-                <table>
+                <table id="evaluacionesTable">
                     <thead>
                     <tr>
                         <th>ID</th>
                         <th>Cultivo</th>
-                        <th>Fecha cosecha</th>
-                        <th>Cantidad (kg)</th>
-                        <th>Calidad</th>
-                        <th>Módulo</th>
+                        <th>Siembra ID</th>
+                        <th>Fecha evaluación</th>
+                        <th>Rendimiento</th>
+                        <th>Calificación</th>
                         <th>Observaciones</th>
                         <th>Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>#COS-001</td>
-                        <td>Lechuga</td>
-                        <td>15/03/2025</td>
-                        <td>2.3 kg</td>
-                        <td><span class="badge-calidad badge-excelente">Excelente</span></td>
-                        <td>Módulo 1</td>
-                        <td>Hojas grandes y frescas</td>
-                        <td>
-                            <button class="action-btn ver"><i class="fas fa-eye"></i></button>
-                            <button class="action-btn editar"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn descargar"><i class="fas fa-download"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#COS-002</td>
-                        <td>Espinaca</td>
-                        <td>18/03/2025</td>
-                        <td>1.8 kg</td>
-                        <td><span class="badge-calidad badge-excelente">Excelente</span></td>
-                        <td>Módulo 2</td>
-                        <td>Muy tierna</td>
-                        <td>
-                            <button class="action-btn ver"><i class="fas fa-eye"></i></button>
-                            <button class="action-btn editar"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn descargar"><i class="fas fa-download"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#COS-003</td>
-                        <td>Tomate cherry</td>
-                        <td>20/03/2025</td>
-                        <td>3.5 kg</td>
-                        <td><span class="badge-calidad badge-buena">Buena</span></td>
-                        <td>Módulo 4</td>
-                        <td>Algunos verdes</td>
-                        <td>
-                            <button class="action-btn ver"><i class="fas fa-eye"></i></button>
-                            <button class="action-btn editar"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn descargar"><i class="fas fa-download"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#COS-004</td>
-                        <td>Albahaca</td>
-                        <td>22/03/2025</td>
-                        <td>1.2 kg</td>
-                        <td><span class="badge-calidad badge-excelente">Excelente</span></td>
-                        <td>Módulo 3</td>
-                        <td>Aroma intenso</td>
-                        <td>
-                            <button class="action-btn ver"><i class="fas fa-eye"></i></button>
-                            <button class="action-btn editar"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn descargar"><i class="fas fa-download"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#COS-005</td>
-                        <td>Lechuga</td>
-                        <td>25/03/2025</td>
-                        <td>2.1 kg</td>
-                        <td><span class="badge-calidad badge-regular">Regular</span></td>
-                        <td>Módulo 1</td>
-                        <td>Algunas hojas dañadas</td>
-                        <td>
-                            <button class="action-btn ver"><i class="fas fa-eye"></i></button>
-                            <button class="action-btn editar"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn descargar"><i class="fas fa-download"></i></button>
-                        </td>
-                    </tr>
+                    @forelse($evaluaciones as $evaluacion)
+                        <tr data-cultivo="{{ strtolower($evaluacion->siembra->cultivo->nombre ?? '') }}">
+                            <td>#EV-{{ str_pad($evaluacion->id, 3, '0', STR_PAD_LEFT) }}</td>
+                            <td>{{ $evaluacion->siembra->cultivo->nombre ?? 'N/A' }}</td>
+                            <td>#S-{{ str_pad($evaluacion->siembra_id, 3, '0', STR_PAD_LEFT) }}</td>
+                            <td>{{ $evaluacion->fecha_evaluacion->format('d/m/Y') }}</td>
+                            <td>
+                                <span class="badge-rendimiento
+                                    @if($evaluacion->rendimiento >= 8) badge-alto
+                                    @elseif($evaluacion->rendimiento >= 5) badge-medio
+                                    @else badge-bajo
+                                    @endif">
+                                    {{ $evaluacion->rendimiento >= 8 ? 'Alto' : ($evaluacion->rendimiento >= 5 ? 'Medio' : 'Bajo') }} ({{ $evaluacion->rendimiento }})
+                                </span>
+                            </td>
+                            <td>{{ $evaluacion->rendimiento }}/10</td>
+                            <td>{{ Str::limit($evaluacion->observaciones, 30) }}</td>
+                            <td>
+                                <a href="{{ route('evaluaciones.show', $evaluacion->id) }}" class="action-btn ver"><i class="fas fa-eye"></i></a>
+                                <a href="{{ route('evaluaciones.edit', $evaluacion->id) }}" class="action-btn editar"><i class="fas fa-edit"></i></a>
+                                <form action="{{ route('evaluaciones.destroy', $evaluacion->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('¿Eliminar esta evaluación?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="action-btn eliminar"><i class="fas fa-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="8" class="text-center py-5">
+                                <div class="empty-state">
+                                    <i class="fas fa-chart-bar"></i>
+                                    <h3>No hay evaluaciones registradas</h3>
+                                    <p>Registra tu primera evaluación usando el botón "Nueva Evaluación"</p>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
                     </tbody>
                 </table>
             </div>
             <div class="d-flex justify-content-end mt-3">
-                <nav>
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a class="page-link" href="#">Anterior</a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
-                    </ul>
-                </nav>
+                {{ $evaluaciones->links() }}
             </div>
         </div>
     </div>
@@ -798,6 +847,22 @@
         once: true,
         offset: 50
     });
+
+    function buscarEvaluaciones() {
+        let input = document.getElementById('searchInput');
+        let filter = input.value.toLowerCase();
+        let table = document.getElementById('evaluacionesTable');
+        let tr = table.getElementsByTagName('tr');
+
+        for (let i = 1; i < tr.length; i++) {
+            let cultivo = tr[i].getAttribute('data-cultivo');
+            if (cultivo && cultivo.includes(filter)) {
+                tr[i].style.display = '';
+            } else {
+                tr[i].style.display = 'none';
+            }
+        }
+    }
 </script>
 </body>
 </html>

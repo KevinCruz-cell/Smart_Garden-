@@ -1,4 +1,4 @@
-{{-- resources/views/register.blade.php --}}
+{{-- resources/views/Register/registro.blade.php --}}
     <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -112,6 +112,17 @@
             outline: none;
         }
 
+        .is-invalid {
+            border-color: #dc3545 !important;
+        }
+
+        .invalid-feedback {
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            margin-left: 15px;
+        }
+
         .btn-register {
             background: linear-gradient(135deg, var(--verde-hoja), var(--verde-oscuro));
             color: white;
@@ -185,6 +196,15 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
+        .alert-danger {
+            border-radius: 50px;
+            background-color: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+            border: 1px solid rgba(220, 53, 69, 0.2);
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+
         @media (max-width: 576px) {
             .register-card {
                 padding: 30px 20px;
@@ -204,30 +224,109 @@
         <p>Únete a la familia SmartGarden y comienza a cultivar</p>
     </div>
 
+    {{-- Mostrar errores de validación --}}
+    @if($errors->any())
+        <div class="alert-danger mb-4">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <strong>Por favor corrige los siguientes errores:</strong>
+            <ul class="mt-2 mb-0">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form method="POST" action="{{ route('register') }}">
         @csrf
         <div class="row g-3">
             <div class="col-md-6">
                 <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ej. Juan" required>
+                <input type="text" class="form-control @error('nombre') is-invalid @enderror" id="nombre" name="nombre" value="{{ old('nombre') }}" placeholder="Ej. Juan" required autocomplete="given-name">
+                @error('nombre')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
             <div class="col-md-6">
                 <label for="apellido" class="form-label">Apellido</label>
-                <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Ej. Pérez" required>
+                <input type="text" class="form-control @error('apellido') is-invalid @enderror" id="apellido" name="apellido" value="{{ old('apellido') }}" placeholder="Ej. Pérez" required autocomplete="family-name">
+                @error('apellido')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
             <div class="col-12">
                 <label for="email" class="form-label">Correo electrónico</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="correo@ejemplo.com" required>
+                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" placeholder="correo@ejemplo.com" required autocomplete="email">
+                @error('email')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
+
+            <!-- Campo de contraseña con anti-autocompletado -->
             <div class="col-12">
                 <label for="password" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="••••••••" required>
+                <div style="position: relative;">
+                    <input type="password"
+                           class="form-control @error('password') is-invalid @enderror"
+                           id="password"
+                           name="password"
+                           placeholder=""
+                           required
+                           autocomplete="new-password"
+                           readonly
+                           onfocus="this.removeAttribute('readonly')"
+                           value="">
+                </div>
+                @error('password')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
+
+            <!-- Campo de confirmación con anti-autocompletado -->
             <div class="col-12">
                 <label for="password_confirmation" class="form-label">Confirmar contraseña</label>
-                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="••••••••" required>
+                <div style="position: relative;">
+                    <input type="password"
+                           class="form-control"
+                           id="password_confirmation"
+                           name="password_confirmation"
+                           placeholder=""
+                           required
+                           autocomplete="new-password"
+                           readonly
+                           onfocus="this.removeAttribute('readonly')"
+                           value="">
+                </div>
             </div>
         </div>
+
+        <!-- Script para limpiar campos al cargar -->
+        <script>
+            (function() {
+                window.addEventListener('load', function() {
+                    // Limpiar campo de contraseña
+                    var passwordField = document.getElementById('password');
+                    if (passwordField) {
+                        passwordField.value = '';
+                    }
+
+                    // Limpiar campo de confirmación
+                    var confirmField = document.getElementById('password_confirmation');
+                    if (confirmField) {
+                        confirmField.value = '';
+                    }
+                });
+
+                // También limpiar cuando el usuario haga clic
+                document.getElementById('password')?.addEventListener('click', function() {
+                    this.value = '';
+                });
+
+                document.getElementById('password_confirmation')?.addEventListener('click', function() {
+                    this.value = '';
+                });
+            })();
+        </script>
 
         <button type="submit" class="btn btn-register mt-4">
             Registrarse <i class="fas fa-arrow-right ms-2"></i>

@@ -1,4 +1,4 @@
-{{-- resources/views/alertas.blade.php --}}
+{{-- resources/views/Alertas/alertas.blade.php --}}
     <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -37,7 +37,7 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: var(--fondo);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             color: #333;
             overflow-x: hidden;
         }
@@ -165,6 +165,7 @@
             font-size: 1.5rem;
             color: #666;
             transition: var(--transicion);
+            text-decoration: none;
         }
 
         .notification-badge:hover {
@@ -181,6 +182,24 @@
             font-size: 0.7rem;
             padding: 2px 5px;
             border-radius: 10px;
+        }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: var(--sombra-media);
+            border-radius: 15px;
+            padding: 10px 0;
+            margin-top: 10px;
+        }
+
+        .dropdown-item {
+            padding: 10px 20px;
+            transition: var(--transicion);
+        }
+
+        .dropdown-item:hover {
+            background: rgba(46,125,50,0.05);
+            color: var(--verde-hoja);
         }
 
         .user-profile {
@@ -210,9 +229,29 @@
             font-weight: 600;
         }
 
+        /* Mensajes de alerta */
+        .alert {
+            border-radius: 50px;
+            padding: 15px 25px;
+            border: none;
+            margin-bottom: 20px;
+        }
+
+        .alert-success {
+            background: rgba(46,125,50,0.1);
+            color: var(--verde-hoja);
+            border: 1px solid rgba(46,125,50,0.2);
+        }
+
+        .alert-danger {
+            background: rgba(220,53,69,0.1);
+            color: #dc3545;
+            border: 1px solid rgba(220,53,69,0.2);
+        }
+
         /* Botones */
         .btn-naranja {
-            background: var(--naranja);
+            background: linear-gradient(135deg, var(--naranja), var(--naranja-oscuro));
             color: white;
             border: none;
             padding: 10px 25px;
@@ -222,12 +261,13 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            text-decoration: none;
         }
 
         .btn-naranja:hover {
-            background: var(--naranja-oscuro);
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(255,152,0,0.3);
+            color: white;
         }
 
         .btn-outline-verde {
@@ -238,6 +278,8 @@
             border-radius: 50px;
             font-weight: 600;
             transition: var(--transicion);
+            text-decoration: none;
+            display: inline-block;
         }
 
         .btn-outline-verde:hover {
@@ -421,10 +463,6 @@
             background: rgba(46,125,50,0.02);
         }
 
-        tr:hover td {
-            background: rgba(46,125,50,0.02);
-        }
-
         .badge-alerta {
             padding: 5px 12px;
             border-radius: 50px;
@@ -433,7 +471,7 @@
             display: inline-block;
         }
 
-        .badge-alta {
+        .badge-critica, .badge-alta {
             background: rgba(220,53,69,0.1);
             color: #dc3545;
         }
@@ -474,6 +512,7 @@
             transition: var(--transicion);
             margin: 0 3px;
             border: none;
+            text-decoration: none;
         }
 
         .action-btn.ver {
@@ -488,9 +527,39 @@
             background: #6c757d;
         }
 
+        .action-btn.eliminar {
+            background: #dc3545;
+        }
+
         .action-btn:hover {
             transform: scale(1.15);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Estado vacío */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--sombra-suave);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: #999;
+            margin-bottom: 20px;
         }
 
         /* Responsive */
@@ -527,15 +596,15 @@
         </div>
         <div class="sidebar-menu">
             <ul>
-                <li><a href="/dashboard"><i class="fas fa-home"></i> Vista general</a></li>
-                <li><a href="/cultivos"><i class="fas fa-seedling"></i> Cultivos</a></li>
-                <li><a href="/siembras"><i class="fas fa-sprout"></i> Siembras</a></li>
-                <li><a href="/monitoreo"><i class="fas fa-thermometer-half"></i> Monitoreo</a></li>
-                <li><a href="#" class="active"><i class="fas fa-bell"></i> Alertas</a></li>
-                <li><a href="#"><i class="fas fa-file-alt"></i> Reportes</a></li>
-                <li><a href="#"><i class="fas fa-carrot"></i> Cosechas</a></li>
-                <li><a href="#"><i class="fas fa-chart-bar"></i> Evaluaciones</a></li>
-                <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
+                <li><a href="{{ route('dashboard') }}"><i class="fas fa-home"></i> Vista general</a></li>
+                <li><a href="{{ route('cultivos.index') }}"><i class="fas fa-seedling"></i> Cultivos</a></li>
+                <li><a href="{{ route('siembras.index') }}"><i class="fas fa-sprout"></i> Siembras</a></li>
+                <li><a href="{{ route('monitoreo.index') }}"><i class="fas fa-thermometer-half"></i> Monitoreo</a></li>
+                <li><a href="{{ route('alertas.index') }}" class="active"><i class="fas fa-bell"></i> Alertas</a></li>
+                <li><a href="{{ route('reportes.index') }}"><i class="fas fa-file-alt"></i> Reportes</a></li>
+                <li><a href="{{ route('cosechas.index') }}"><i class="fas fa-carrot"></i> Cosechas</a></li>
+                <li><a href="{{ route('evaluaciones.index') }}"><i class="fas fa-chart-bar"></i> Evaluaciones</a></li>
+                <li><a href="{{ route('configuracion.index') }}"><i class="fas fa-cog"></i> Configuración</a></li>
             </ul>
         </div>
     </div>
@@ -549,23 +618,55 @@
                 <p>Monitorea los eventos importantes de tu cultivo</p>
             </div>
             <div class="header-actions">
-                <a href="#" class="notification-badge">
+                <a href="{{ route('alertas.index') }}" class="notification-badge">
                     <i class="fas fa-bell"></i>
-                    <span>5</span>
+                    @if($stats['pendientes'] > 0)
+                        <span>{{ $stats['pendientes'] }}</span>
+                    @endif
                 </a>
-                <div class="user-profile">
-                    <img src="https://ui-avatars.com/api/?name=Christopher+Kevin&background=2E7D32&color=fff&size=40" alt="Profile">
-                    <span>Christopher</span>
-                    <i class="fas fa-chevron-down"></i>
+
+                <!-- Dropdown de usuario -->
+                <div class="dropdown">
+                    <div class="user-profile dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="{{ auth()->user()->avatar }}" alt="Profile">
+                        <span>{{ auth()->user()->nombre }}</span>
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="{{ route('configuracion.index') }}"><i class="fas fa-user me-2"></i>Mi Perfil</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item text-danger" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión
+                            </a>
+                        </li>
+                    </ul>
                 </div>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
             </div>
         </div>
+
+        <!-- Mensajes de sesión -->
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
         <!-- Stats Cards -->
         <div class="stats-grid">
             <div class="stat-card" data-aos="fade-up" data-aos-delay="50">
                 <div class="stat-info">
-                    <h3>5</h3>
+                    <h3>{{ $stats['pendientes'] }}</h3>
                     <p>Pendientes</p>
                     <small>Requieren atención</small>
                 </div>
@@ -575,7 +676,7 @@
             </div>
             <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
                 <div class="stat-info">
-                    <h3>12</h3>
+                    <h3>{{ $stats['resueltas_hoy'] }}</h3>
                     <p>Resueltas (hoy)</p>
                     <small>Últimas 24h</small>
                 </div>
@@ -585,7 +686,7 @@
             </div>
             <div class="stat-card" data-aos="fade-up" data-aos-delay="150">
                 <div class="stat-info">
-                    <h3>3</h3>
+                    <h3>{{ $stats['criticas'] }}</h3>
                     <p>Críticas</p>
                     <small>Alta prioridad</small>
                 </div>
@@ -595,7 +696,7 @@
             </div>
             <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
                 <div class="stat-info">
-                    <h3>24</h3>
+                    <h3>{{ $stats['total_mes'] }}</h3>
                     <p>Total (mes)</p>
                     <small>Histórico</small>
                 </div>
@@ -609,27 +710,27 @@
         <div class="filtros-card" data-aos="fade-up" data-aos-delay="100">
             <div class="filtros-grid">
                 <div class="filtros-group">
-                    <select class="filtro-select">
-                        <option>Todas las alertas</option>
-                        <option>Pendientes</option>
-                        <option>Resueltas</option>
-                        <option>Críticas</option>
+                    <select class="filtro-select" id="estadoFilter" onchange="filtrarAlertas()">
+                        <option value="">Todas las alertas</option>
+                        <option value="Pendiente">Pendientes</option>
+                        <option value="Resuelta">Resueltas</option>
+                        <option value="Ignorada">Ignoradas</option>
                     </select>
-                    <select class="filtro-select">
-                        <option>Últimas 24h</option>
-                        <option>Última semana</option>
-                        <option>Último mes</option>
-                        <option>Personalizado</option>
+                    <select class="filtro-select" id="prioridadFilter" onchange="filtrarAlertas()">
+                        <option value="">Todas las prioridades</option>
+                        <option value="Crítica">Críticas</option>
+                        <option value="Alta">Altas</option>
+                        <option value="Media">Medias</option>
+                        <option value="Baja">Bajas</option>
                     </select>
-                    <select class="filtro-select">
-                        <option>Todos los módulos</option>
-                        <option>Módulo 1</option>
-                        <option>Módulo 2</option>
-                        <option>Módulo 3</option>
-                        <option>Módulo 4</option>
+                    <select class="filtro-select" id="moduloFilter" onchange="filtrarAlertas()">
+                        <option value="">Todos los módulos</option>
+                        @foreach($modulos ?? [] as $modulo)
+                            <option value="{{ $modulo->id }}">{{ $modulo->nombre }}</option>
+                        @endforeach
                     </select>
                 </div>
-                <button class="btn-naranja">
+                <button class="btn-naranja" onclick="filtrarAlertas()">
                     <i class="fas fa-filter"></i> Filtrar
                 </button>
             </div>
@@ -640,16 +741,16 @@
             <div class="table-header">
                 <h2><i class="fas fa-list"></i> Listado de Alertas</h2>
                 <div>
-                    <button class="btn-outline-verde me-2">
-                        <i class="fas fa-download"></i> Exportar
-                    </button>
-                    <button class="btn-naranja">
-                        <i class="fas fa-check-double"></i> Marcar todas como leídas
-                    </button>
+                    <form action="{{ route('alertas.marcar-todas') }}" method="POST" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="btn-naranja" onclick="return confirm('¿Marcar todas las alertas como leídas?')">
+                            <i class="fas fa-check-double"></i> Marcar todas como leídas
+                        </button>
+                    </form>
                 </div>
             </div>
             <div class="table-responsive">
-                <table>
+                <table id="alertasTable">
                     <thead>
                     <tr>
                         <th>ID</th>
@@ -663,103 +764,76 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>#001</td>
-                        <td><i class="fas fa-tint" style="color: var(--azul-cielo);"></i> Humedad</td>
-                        <td>Humedad baja en módulo 2</td>
-                        <td>Módulo 2 (Espinaca)</td>
-                        <td><span class="badge-alerta badge-alta">Alta</span></td>
-                        <td>25/02/2025 14:30</td>
-                        <td><span class="badge-alerta badge-pendiente">Pendiente</span></td>
-                        <td>
-                            <button class="action-btn ver"><i class="fas fa-eye"></i></button>
-                            <button class="action-btn resolver"><i class="fas fa-check"></i></button>
-                            <button class="action-btn ignorar"><i class="fas fa-times"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#002</td>
-                        <td><i class="fas fa-sun" style="color: var(--naranja);"></i> Luz</td>
-                        <td>Luz insuficiente en módulo 3</td>
-                        <td>Módulo 3 (Albahaca)</td>
-                        <td><span class="badge-alerta badge-media">Media</span></td>
-                        <td>25/02/2025 12:15</td>
-                        <td><span class="badge-alerta badge-pendiente">Pendiente</span></td>
-                        <td>
-                            <button class="action-btn ver"><i class="fas fa-eye"></i></button>
-                            <button class="action-btn resolver"><i class="fas fa-check"></i></button>
-                            <button class="action-btn ignorar"><i class="fas fa-times"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#003</td>
-                        <td><i class="fas fa-thermometer-half" style="color: #dc3545;"></i> Temperatura</td>
-                        <td>Temperatura alta en invernadero</td>
-                        <td>General</td>
-                        <td><span class="badge-alerta badge-alta">Alta</span></td>
-                        <td>25/02/2025 10:45</td>
-                        <td><span class="badge-alerta badge-pendiente">Pendiente</span></td>
-                        <td>
-                            <button class="action-btn ver"><i class="fas fa-eye"></i></button>
-                            <button class="action-btn resolver"><i class="fas fa-check"></i></button>
-                            <button class="action-btn ignorar"><i class="fas fa-times"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#004</td>
-                        <td><i class="fas fa-seedling" style="color: var(--verde-hoja);"></i> Nutrientes</td>
-                        <td>Nivel bajo de nutrientes en módulo 1</td>
-                        <td>Módulo 1 (Lechuga)</td>
-                        <td><span class="badge-alerta badge-media">Media</span></td>
-                        <td>24/02/2025 18:20</td>
-                        <td><span class="badge-alerta badge-resuelta">Resuelta</span></td>
-                        <td>
-                            <button class="action-btn ver"><i class="fas fa-eye"></i></button>
-                            <button class="action-btn resolver" disabled style="opacity: 0.5;"><i class="fas fa-check"></i></button>
-                            <button class="action-btn ignorar" disabled style="opacity: 0.5;"><i class="fas fa-times"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#005</td>
-                        <td><i class="fas fa-tint" style="color: var(--azul-cielo);"></i> Riego</td>
-                        <td>Riego automático activado</td>
-                        <td>Módulo 2</td>
-                        <td><span class="badge-alerta badge-baja">Baja</span></td>
-                        <td>24/02/2025 09:00</td>
-                        <td><span class="badge-alerta badge-resuelta">Resuelta</span></td>
-                        <td>
-                            <button class="action-btn ver"><i class="fas fa-eye"></i></button>
-                            <button class="action-btn resolver" disabled style="opacity: 0.5;"><i class="fas fa-check"></i></button>
-                            <button class="action-btn ignorar" disabled style="opacity: 0.5;"><i class="fas fa-times"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#006</td>
-                        <td><i class="fas fa-exclamation-triangle" style="color: var(--naranja);"></i> Sistema</td>
-                        <td>Fallo en sensor de humedad (módulo 4)</td>
-                        <td>Módulo 4 (Tomate)</td>
-                        <td><span class="badge-alerta badge-alta">Alta</span></td>
-                        <td>23/02/2025 22:10</td>
-                        <td><span class="badge-alerta badge-ignorada">Ignorada</span></td>
-                        <td>
-                            <button class="action-btn ver"><i class="fas fa-eye"></i></button>
-                            <button class="action-btn resolver"><i class="fas fa-check"></i></button>
-                            <button class="action-btn ignorar"><i class="fas fa-times"></i></button>
-                        </td>
-                    </tr>
+                    @forelse($alertas as $alerta)
+                        <tr data-estado="{{ $alerta->estado }}" data-prioridad="{{ $alerta->prioridad }}" data-modulo="{{ $alerta->modulo_id }}">
+                            <td>#{{ str_pad($alerta->id, 3, '0', STR_PAD_LEFT) }}</td>
+                            <td>
+                                @if($alerta->tipo == 'humedad_baja' || $alerta->tipo == 'Humedad')
+                                    <i class="fas fa-tint" style="color: var(--azul-cielo);"></i> Humedad
+                                @elseif($alerta->tipo == 'luz_insuficiente' || $alerta->tipo == 'Luz')
+                                    <i class="fas fa-sun" style="color: var(--naranja);"></i> Luz
+                                @elseif($alerta->tipo == 'temperatura_alta' || $alerta->tipo == 'Temperatura')
+                                    <i class="fas fa-thermometer-half" style="color: #dc3545;"></i> Temperatura
+                                @elseif($alerta->tipo == 'ph_bajo' || $alerta->tipo == 'pH')
+                                    <i class="fas fa-flask" style="color: var(--verde-hoja);"></i> pH
+                                @else
+                                    <i class="fas fa-exclamation-triangle" style="color: var(--naranja);"></i> {{ $alerta->tipo }}
+                                @endif
+                            </td>
+                            <td>{{ $alerta->mensaje }}</td>
+                            <td>{{ $alerta->modulo->nombre ?? 'General' }}</td>
+                            <td>
+                                <span class="badge-alerta
+                                    @if($alerta->prioridad == 'Crítica' || $alerta->prioridad == 'Alta') badge-critica
+                                    @elseif($alerta->prioridad == 'Media') badge-media
+                                    @else badge-baja
+                                    @endif">
+                                    {{ $alerta->prioridad }}
+                                </span>
+                            </td>
+                            <td>{{ $alerta->created_at->format('d/m/Y H:i') }}</td>
+                            <td>
+                                <span class="badge-alerta
+                                    @if($alerta->estado == 'Pendiente') badge-pendiente
+                                    @elseif($alerta->estado == 'Resuelta') badge-resuelta
+                                    @else badge-ignorada
+                                    @endif">
+                                    {{ $alerta->estado }}
+                                </span>
+                            </td>
+                            <td>
+                                <a href="#" class="action-btn ver" onclick="verAlerta({{ $alerta->id }})"><i class="fas fa-eye"></i></a>
+
+                                @if($alerta->estado == 'Pendiente')
+                                    <form action="{{ route('alertas.resolver', $alerta->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        <button type="submit" class="action-btn resolver"><i class="fas fa-check"></i></button>
+                                    </form>
+                                @endif
+
+                                <form action="{{ route('alertas.destroy', $alerta->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('¿Eliminar esta alerta?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="action-btn eliminar"><i class="fas fa-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="8" class="text-center py-5">
+                                <div class="empty-state">
+                                    <i class="fas fa-bell-slash"></i>
+                                    <h3>No hay alertas registradas</h3>
+                                    <p>Las alertas aparecerán aquí cuando ocurran eventos importantes</p>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
                     </tbody>
                 </table>
             </div>
             <div class="d-flex justify-content-end mt-3">
-                <nav>
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a class="page-link" href="#">Anterior</a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
-                    </ul>
-                </nav>
+                {{ $alertas->links() }}
             </div>
         </div>
     </div>
@@ -774,6 +848,28 @@
         once: true,
         offset: 50
     });
+
+    function verAlerta(id) {
+        // Aquí puedes implementar un modal para ver detalles
+        alert('Ver detalles de alerta #' + id);
+    }
+
+    function filtrarAlertas() {
+        let estado = document.getElementById('estadoFilter').value;
+        let prioridad = document.getElementById('prioridadFilter').value;
+        let modulo = document.getElementById('moduloFilter').value;
+        let filas = document.querySelectorAll('#alertasTable tbody tr');
+
+        filas.forEach(fila => {
+            let mostrar = true;
+
+            if (estado && fila.dataset.estado !== estado) mostrar = false;
+            if (prioridad && fila.dataset.prioridad !== prioridad) mostrar = false;
+            if (modulo && fila.dataset.modulo !== modulo) mostrar = false;
+
+            fila.style.display = mostrar ? '' : 'none';
+        });
+    }
 </script>
 </body>
 </html>

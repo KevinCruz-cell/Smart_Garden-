@@ -1,4 +1,4 @@
-{{-- resources/views/login.blade.php --}}
+{{-- resources/views/Sesion/sesion.blade.php --}}
     <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -207,6 +207,16 @@
             border-color: var(--verde-hoja);
         }
 
+        /* Mensajes de error */
+        .alert-danger {
+            border-radius: 50px;
+            background-color: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+            border: 1px solid rgba(220, 53, 69, 0.2);
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+
         @media (max-width: 576px) {
             .login-card {
                 padding: 30px 20px;
@@ -226,28 +236,85 @@
         <p>Inicia sesión para acceder a tu huerto virtual</p>
     </div>
 
+    {{-- Mostrar errores de autenticación --}}
+    @if($errors->any())
+        <div class="alert-danger">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            {{ $errors->first() }}
+        </div>
+    @endif
+
+    {{-- Mostrar mensaje de éxito después de registro --}}
+    @if(session('success'))
+        <div class="alert-success" style="border-radius: 50px; background-color: rgba(46, 125, 50, 0.1); color: var(--verde-hoja); border: 1px solid rgba(46, 125, 50, 0.2); padding: 12px 20px; margin-bottom: 20px;">
+            <i class="fas fa-check-circle me-2"></i>
+            {{ session('success') }}
+        </div>
+    @endif
+
     <form method="POST" action="{{ route('login') }}">
         @csrf
+
+        <!-- Campo de email con autocomplete -->
         <div class="mb-4">
             <label for="email" class="form-label">Correo electrónico</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="correo@ejemplo.com" required>
+            <input type="email"
+                   class="form-control @error('email') is-invalid @enderror"
+                   id="email"
+                   name="email"
+                   value="{{ old('email') }}"
+                   placeholder="correo@ejemplo.com"
+                   required
+                   autofocus
+                   autocomplete="email">
+            @error('email')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
 
+        <!-- Campo de contraseña con múltiples atributos anti-autocompletado -->
         <div class="mb-3">
             <label for="password" class="form-label">Contraseña</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="••••••••" required>
+            <div style="position: relative;">
+                <input type="password"
+                       class="form-control @error('password') is-invalid @enderror"
+                       id="password"
+                       name="password"
+                       placeholder=""
+                       required
+                       autocomplete="new-password"  <!-- Cambiado de 'off' a 'new-password' -->
+            </div>
+            @error('password')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
+
+        <!-- Script adicional para limpiar el campo -->
+        <script>
+            (function() {
+                // Limpiar campo de contraseña al cargar la página
+                window.addEventListener('load', function() {
+                    var passwordField = document.getElementById('password');
+                    if (passwordField) {
+                        passwordField.value = '';
+                    }
+                });
+
+                // También limpiar cuando el usuario haga clic en el campo
+                document.getElementById('password')?.addEventListener('click', function() {
+                    this.value = '';
+                });
+            })();
+        </script>
 
         <div class="d-flex justify-content-between align-items-center">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="remember" name="remember">
+                <input class="form-check-input" type="checkbox" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
                 <label class="form-check-label" for="remember">
                     Recordarme
                 </label>
             </div>
-            <div class="forgot-password">
-                <a href="#">¿Olvidaste tu contraseña?</a>
-            </div>
+            <!-- Sección de olvidé contraseña eliminada temporalmente -->
         </div>
 
         <button type="submit" class="btn btn-login">

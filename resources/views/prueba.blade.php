@@ -1,19 +1,17 @@
-{{-- resources/views/dashboard.blade.php --}}
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - SmartGarden</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
+    <title>Dashboard Agrícola - Vista Previa</title>
+    <!-- Font Awesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <!-- AOS -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Google Fonts - Poppins -->
+    <link href="https://fon
+    ts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Aquí va tu código CSS -->
     <style>
+        /* ===== TU CÓDIGO CSS COMPLETO VA AQUÍ ===== */
         :root {
             --verde-hoja: #2E7D32;
             --verde-menta: #81C784;
@@ -199,6 +197,7 @@
             font-size: 1.5rem;
             color: #666;
             transition: var(--transicion);
+            text-decoration: none;
         }
 
         .notification-badge:hover {
@@ -221,6 +220,28 @@
         .notification-badge:hover span {
             background: var(--verde-hoja);
             transform: scale(1.1);
+        }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: var(--sombra-media);
+            border-radius: 15px;
+            padding: 10px 0;
+            margin-top: 10px;
+        }
+
+        .dropdown-item {
+            padding: 10px 20px;
+            transition: var(--transicion);
+        }
+
+        .dropdown-item:hover {
+            background: rgba(46,125,50,0.05);
+            color: var(--verde-hoja);
+        }
+
+        .dropdown-item.text-danger:hover {
+            background: rgba(220,53,69,0.1);
         }
 
         .user-profile {
@@ -275,6 +296,8 @@
             justify-content: space-between;
             border: 1px solid rgba(46,125,50,0.1);
             cursor: pointer;
+            text-decoration: none;
+            color: inherit;
         }
 
         .stat-card:hover {
@@ -373,6 +396,79 @@
             color: var(--verde-hoja);
         }
 
+        /* Lista de siembras */
+        .siembra-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 15px;
+            background: #f8f9fa;
+            margin-bottom: 10px;
+            transition: var(--transicion);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .siembra-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px) scale(1.01);
+            box-shadow: var(--sombra-suave);
+        }
+
+        .siembra-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(46,125,50,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--verde-hoja);
+            font-size: 1.2rem;
+            transition: var(--transicion);
+        }
+
+        .siembra-item:hover .siembra-icon {
+            background: var(--verde-hoja);
+            color: white;
+            transform: rotate(5deg);
+        }
+
+        .siembra-content {
+            flex: 1;
+        }
+
+        .siembra-title {
+            font-weight: 600;
+            transition: var(--transicion);
+        }
+
+        .siembra-item:hover .siembra-title {
+            color: var(--verde-hoja);
+        }
+
+        .siembra-subtitle {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .siembra-progress {
+            width: 100px;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-left: 15px;
+        }
+
+        .siembra-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--verde-hoja), var(--naranja));
+            border-radius: 10px;
+        }
+
         /* Monitoreo ambiental */
         .monitoring-grid {
             display: grid;
@@ -453,12 +549,35 @@
             font-weight: 600;
             transition: var(--transicion);
             cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .btn-naranja:hover {
             background: var(--naranja-oscuro);
             transform: translateY(-2px) scale(1.05);
             box-shadow: 0 5px 15px rgba(255,152,0,0.4);
+            color: white;
+        }
+
+        .btn-verde {
+            background: var(--verde-hoja);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transicion);
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-verde:hover {
+            background: var(--verde-oscuro);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 5px 15px rgba(46,125,50,0.4);
+            color: white;
         }
 
         .alert-item {
@@ -470,6 +589,8 @@
             margin-bottom: 10px;
             transition: var(--transicion);
             cursor: pointer;
+            text-decoration: none;
+            color: inherit;
         }
 
         .alert-item:hover {
@@ -482,21 +603,27 @@
             width: 40px;
             height: 40px;
             border-radius: 10px;
-            background: rgba(255,152,0,0.1);
             display: flex;
             align-items: center;
             justify-content: center;
             margin-right: 15px;
-            color: var(--naranja);
             font-size: 1.2rem;
             transition: var(--transicion);
         }
 
-        .alert-item:hover .alert-icon {
-            background: var(--naranja);
-            color: white;
-            transform: rotate(5deg);
-        }
+        .alert-icon.Crítica, .alert-icon.critica { background: rgba(220,53,69,0.1); color: #dc3545; }
+        .alert-icon.Alta, .alert-icon.alta { background: rgba(255,152,0,0.1); color: var(--naranja); }
+        .alert-icon.Media, .alert-icon.media { background: rgba(100,181,246,0.1); color: var(--azul-cielo); }
+        .alert-icon.Baja, .alert-icon.baja { background: rgba(46,125,50,0.1); color: var(--verde-hoja); }
+
+        .alert-item:hover .alert-icon.Crítica,
+        .alert-item:hover .alert-icon.critica { background: #dc3545; color: white; }
+        .alert-item:hover .alert-icon.Alta,
+        .alert-item:hover .alert-icon.alta { background: var(--naranja); color: white; }
+        .alert-item:hover .alert-icon.Media,
+        .alert-item:hover .alert-icon.media { background: var(--azul-cielo); color: white; }
+        .alert-item:hover .alert-icon.Baja,
+        .alert-item:hover .alert-icon.baja { background: var(--verde-hoja); color: white; }
 
         .alert-content {
             flex: 1;
@@ -521,6 +648,19 @@
             color: var(--verde-oscuro);
         }
 
+        /* Estado vacío */
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #ddd;
+        }
+
         /* Responsive */
         @media (max-width: 992px) {
             .dashboard {
@@ -543,34 +683,32 @@
 </head>
 <body>
 <div class="dashboard">
-    <!-- Sidebar -->
-    <div class="sidebar" data-aos="fade-right" data-aos-duration="1000">
+    <!-- SIDEBAR (Menú lateral) -->
+    <div class="sidebar">
         <div class="sidebar-header">
-            <h3><i class="fas fa-seedling"></i> SmartGarden</h3>
-            <p>Gestión Inteligente</p>
+            <h3><i class="fas fa-leaf"></i> AgroControl</h3>
+            <p>Sistema de monitoreo</p>
         </div>
         <div class="sidebar-menu">
             <ul>
-                <li><a href="#" class="active"><i class="fas fa-home"></i> Vista general</a></li>
-                <li><a href="#"><i class="fas fa-seedling"></i> Cultivos</a></li>
-                <li><a href="#"><i class="fas fa-sprout"></i> Siembras</a></li>
-                <li><a href="#"><i class="fas fa-thermometer-half"></i> Monitoreo</a></li>
+                <li><a href="#" class="active"><i class="fas fa-home"></i> Inicio</a></li>
+                <li><a href="#"><i class="fas fa-seedling"></i> Siembras</a></li>
+                <li><a href="#"><i class="fas fa-chart-line"></i> Estadísticas</a></li>
+                <li><a href="#"><i class="fas fa-tint"></i> Riego</a></li>
+                <li><a href="#"><i class="fas fa-temperature-high"></i> Clima</a></li>
                 <li><a href="#"><i class="fas fa-bell"></i> Alertas</a></li>
-                <li><a href="#"><i class="fas fa-file-alt"></i> Reportes</a></li>
-                <li><a href="#"><i class="fas fa-carrot"></i> Cosechas</a></li>
-                <li><a href="#"><i class="fas fa-chart-bar"></i> Evaluaciones</a></li>
                 <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
             </ul>
         </div>
     </div>
 
-    <!-- Main Content -->
+    <!-- CONTENIDO PRINCIPAL -->
     <div class="main-content">
-        <!-- Header -->
-        <div class="dashboard-header" data-aos="fade-down" data-aos-duration="1000">
+        <!-- HEADER -->
+        <div class="dashboard-header">
             <div class="header-title">
-                <h1>Gestión General</h1>
-                <p>Bienvenido, Christopher Kevin</p>
+                <h1>Bienvenido, Juan</h1>
+                <p>Aquí está el resumen de tus cultivos</p>
             </div>
             <div class="header-actions">
                 <a href="#" class="notification-badge">
@@ -578,162 +716,189 @@
                     <span>3</span>
                 </a>
                 <div class="user-profile">
-                    <img src="https://ui-avatars.com/api/?name=Christopher+Kevin&background=2E7D32&color=fff&size=40" alt="Profile">
-                    <span>Christopher</span>
+                    <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="User">
+                    <span>Juan Pérez</span>
                     <i class="fas fa-chevron-down"></i>
                 </div>
             </div>
         </div>
 
-        <!-- Stats Cards -->
+        <!-- TARJETAS DE RESUMEN (STATS) -->
         <div class="stats-grid">
-            <div class="stat-card" data-aos="fade-up" data-aos-delay="50">
+            <a href="#" class="stat-card">
                 <div class="stat-info">
-                    <h3>0</h3>
-                    <p>Total Cultivos</p>
-                    <small>En desarrollo</small>
+                    <h3>24</h3>
+                    <p>Siembras activas</p>
+                    <small>+3 esta semana</small>
                 </div>
                 <div class="stat-icon">
                     <i class="fas fa-seedling"></i>
                 </div>
-            </div>
-            <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+            </a>
+            <a href="#" class="stat-card">
                 <div class="stat-info">
-                    <h3>$0.00</h3>
-                    <p>Inversión Total</p>
-                    <small>Variedades</small>
+                    <h3>156</h3>
+                    <p>Plantas</p>
+                    <small>12 en cosecha</small>
                 </div>
                 <div class="stat-icon">
-                    <i class="fas fa-dollar-sign"></i>
+                    <i class="fas fa-tree"></i>
                 </div>
-            </div>
-            <div class="stat-card" data-aos="fade-up" data-aos-delay="150">
+            </a>
+            <a href="#" class="stat-card">
                 <div class="stat-info">
-                    <h3>0</h3>
-                    <p>Alertas Pendientes</p>
-                    <small>Todo en orden</small>
+                    <h3>85%</h3>
+                    <p>Humedad</p>
+                    <small>Nivel óptimo</small>
                 </div>
                 <div class="stat-icon">
-                    <i class="fas fa-bell"></i>
+                    <i class="fas fa-tint"></i>
                 </div>
-            </div>
-            <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+            </a>
+            <a href="#" class="stat-card">
                 <div class="stat-info">
-                    <h3>0</h3>
-                    <p>Total Siembras</p>
-                    <small>Historial completo</small>
+                    <h3>23°C</h3>
+                    <p>Temperatura</p>
+                    <small>+2°C que ayer</small>
                 </div>
                 <div class="stat-icon">
-                    <i class="fas fa-sprout"></i>
+                    <i class="fas fa-temperature-high"></i>
                 </div>
-            </div>
-            <div class="stat-card" data-aos="fade-up" data-aos-delay="250">
-                <div class="stat-info">
-                    <h3>$0.00</h3>
-                    <p>Ingresos Estimados</p>
-                    <small>Proyección actual</small>
-                </div>
-                <div class="stat-icon">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-            </div>
+            </a>
         </div>
 
-        <!-- Dos columnas: Siembras Recientes y Evaluaciones -->
+        <!-- FILA DE DOS COLUMNAS -->
         <div class="row-custom">
-            <div class="card-custom" data-aos="fade-right" data-aos-delay="100">
-                <h5><i class="fas fa-history"></i> Siembras Recientes</h5>
-                <p class="text-muted">No hay siembras registradas.</p>
+            <!-- COLUMNA IZQUIERDA: Siembras recientes -->
+            <div class="card-custom">
+                <h5><i class="fas fa-seedling"></i> Siembras activas</h5>
+
+                <a href="#" class="siembra-item">
+                    <div class="siembra-icon"><i class="fas fa-leaf"></i></div>
+                    <div class="siembra-content">
+                        <div class="siembra-title">Tomate Cherry</div>
+                        <div class="siembra-subtitle">Invernadero 3 · 45 plantas</div>
+                    </div>
+                    <div class="siembra-progress">
+                        <div class="siembra-progress-bar" style="width: 75%"></div>
+                    </div>
+                </a>
+
+                <a href="#" class="siembra-item">
+                    <div class="siembra-icon"><i class="fas fa-carrot"></i></div>
+                    <div class="siembra-content">
+                        <div class="siembra-title">Zanahoria</div>
+                        <div class="siembra-subtitle">Campo abierto · 120 plantas</div>
+                    </div>
+                    <div class="siembra-progress">
+                        <div class="siembra-progress-bar" style="width: 40%"></div>
+                    </div>
+                </a>
+
+                <a href="#" class="siembra-item">
+                    <div class="siembra-icon"><i class="fas fa-apple-alt"></i></div>
+                    <div class="siembra-content">
+                        <div class="siembra-title">Fresas</div>
+                        <div class="siembra-subtitle">Macrotúnel · 200 plantas</div>
+                    </div>
+                    <div class="siembra-progress">
+                        <div class="siembra-progress-bar" style="width: 90%"></div>
+                    </div>
+                </a>
+
+                <a href="#" class="siembra-item">
+                    <div class="siembra-icon"><i class="fas fa-pepper-hot"></i></div>
+                    <div class="siembra-content">
+                        <div class="siembra-title">Pimiento Morrón</div>
+                        <div class="siembra-subtitle">Invernadero 2 · 80 plantas</div>
+                    </div>
+                    <div class="siembra-progress">
+                        <div class="siembra-progress-bar" style="width: 25%"></div>
+                    </div>
+                </a>
+
+                <div style="margin-top: 15px; text-align: right;">
+                    <a href="#" class="btn-verde" style="font-size: 0.9rem;">Ver todas <i class="fas fa-arrow-right"></i></a>
+                </div>
             </div>
-            <div class="card-custom" data-aos="fade-left" data-aos-delay="200">
-                <h5><i class="fas fa-chart-pie"></i> Evaluación de Rendimiento Recientes</h5>
-                <p class="text-muted">No hay evaluaciones de rendimiento registradas.</p>
+
+            <!-- COLUMNA DERECHA: Alertas -->
+            <div class="card-custom">
+                <div class="alertas-header">
+                    <h5><i class="fas fa-exclamation-triangle"></i> Alertas activas</h5>
+                    <a href="#" class="btn-naranja" style="font-size: 0.9rem;">Ver todas</a>
+                </div>
+
+                <a href="#" class="alert-item">
+                    <div class="alert-icon Crítica"><i class="fas fa-tint"></i></div>
+                    <div class="alert-content">
+                        <div class="alert-title">Riego urgente - Invernadero 2</div>
+                        <div class="alert-time">Hace 10 minutos</div>
+                    </div>
+                </a>
+
+                <a href="#" class="alert-item">
+                    <div class="alert-icon Alta"><i class="fas fa-temperature-high"></i></div>
+                    <div class="alert-content">
+                        <div class="alert-title">Temperatura alta - Sector A</div>
+                        <div class="alert-time">Hace 25 minutos</div>
+                    </div>
+                </a>
+
+                <a href="#" class="alert-item">
+                    <div class="alert-icon Media"><i class="fas fa-bug"></i></div>
+                    <div class="alert-content">
+                        <div class="alert-title">Plagas detectadas - Tomates</div>
+                        <div class="alert-time">Hace 2 horas</div>
+                    </div>
+                </a>
+
+                <a href="#" class="alert-item">
+                    <div class="alert-icon Baja"><i class="fas fa-seedling"></i></div>
+                    <div class="alert-content">
+                        <div class="alert-title">Fertilizante próximo a vencer</div>
+                        <div class="alert-time">Hace 1 día</div>
+                    </div>
+                </a>
             </div>
         </div>
-
-        <!-- Monitoreo Ambiental -->
-        <div class="card-custom" data-aos="fade-up" data-aos-delay="100">
-            <h5><i class="fas fa-leaf"></i> Monitoreo Ambiental</h5>
+        <!-- MONITOREO AMBIENTAL -->
+        <div class="card-custom" style="margin-bottom: 40px;">
+            <h5><i class="fas fa-cloud-sun"></i> Monitoreo ambiental en tiempo real</h5>
             <div class="monitoring-grid">
                 <div class="monitor-item">
                     <i class="fas fa-thermometer-half"></i>
-                    <h4>0.0°C</h4>
+                    <h4>23°C</h4>
                     <p>Temperatura</p>
                 </div>
                 <div class="monitor-item">
+                    <i class="fas fa-tint"></i>
+                    <h4>85%</h4>
+                    <p>Humedad</p>
+                </div>
+                <div class="monitor-item">
                     <i class="fas fa-sun"></i>
-                    <h4>0 lux</h4>
-                    <p>Luz</p>
+                    <h4>450W/m²</h4>
+                    <p>Radiación</p>
                 </div>
                 <div class="monitor-item">
-                    <i class="fas fa-water"></i>
-                    <h4>0%</h4>
-                    <p>Charola 1</p>
+                    <i class="fas fa-wind"></i>
+                    <h4>12km/h</h4>
+                    <p>Viento</p>
                 </div>
                 <div class="monitor-item">
-                    <i class="fas fa-water"></i>
-                    <h4>0%</h4>
-                    <p>Charola 2</p>
-                </div>
-                <div class="monitor-item">
-                    <i class="fas fa-water"></i>
-                    <h4>0%</h4>
-                    <p>Charola 3</p>
-                </div>
-                <div class="monitor-item">
-                    <i class="fas fa-water"></i>
-                    <h4>0%</h4>
-                    <p>Charola 4</p>
+                    <i class="fas fa-cloud-rain"></i>
+                    <h4>40%</h4>
+                    <p>Lluvia</p>
                 </div>
             </div>
         </div>
-
-        <!-- Alertas Recientes -->
-        <div class="card-custom" data-aos="fade-up" data-aos-delay="200">
-            <div class="alertas-header">
-                <h5><i class="fas fa-exclamation-triangle"></i> Alertas Recientes</h5>
-                <a href="#" class="btn-naranja btn-sm">Ver Todas</a>
-            </div>
-            <div class="alert-item">
-                <div class="alert-icon">
-                    <i class="fas fa-exclamation-triangle"></i>
-                </div>
-                <div class="alert-content">
-                    <div class="alert-title">Humedad baja en charola 2</div>
-                    <div class="alert-time">Hace 10 minutos</div>
-                </div>
-            </div>
-            <div class="alert-item">
-                <div class="alert-icon">
-                    <i class="fas fa-sun"></i>
-                </div>
-                <div class="alert-content">
-                    <div class="alert-title">Luz insuficiente en módulo 3</div>
-                    <div class="alert-time">Hace 1 hora</div>
-                </div>
-            </div>
-            <div class="alert-item">
-                <div class="alert-icon">
-                    <i class="fas fa-tint"></i>
-                </div>
-                <div class="alert-content">
-                    <div class="alert-title">Riego programado para charola 1</div>
-                    <div class="alert-time">Hace 2 horas</div>
-                </div>
-            </div>
+        <!-- SECCIÓN DE EJEMPLO ADICIONAL -->
+        <div style="display: flex; gap: 20px; justify-content: space-between; margin-bottom: 30px;">
+            <a href="#" class="btn-verde" style="padding: 12px 30px;"><i class="fas fa-plus"></i> Nueva siembra</a>
+            <a href="#" class="btn-naranja" style="padding: 12px 30px;"><i class="fas fa-chart-bar"></i> Generar reporte</a>
         </div>
     </div>
 </div>
-
-<!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-    AOS.init({
-        duration: 800,
-        once: true,
-        offset: 50
-    });
-</script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-{{-- resources/views/monitoreo.blade.php --}}
+{{-- resources/views/Monitoreo/monitoreo.blade.php --}}
     <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -39,7 +39,7 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: var(--fondo);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             color: #333;
             overflow-x: hidden;
         }
@@ -166,6 +166,7 @@
             font-size: 1.5rem;
             color: #666;
             transition: var(--transicion);
+            text-decoration: none;
         }
 
         .notification-badge:hover {
@@ -182,6 +183,24 @@
             font-size: 0.7rem;
             padding: 2px 5px;
             border-radius: 10px;
+        }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: var(--sombra-media);
+            border-radius: 15px;
+            padding: 10px 0;
+            margin-top: 10px;
+        }
+
+        .dropdown-item {
+            padding: 10px 20px;
+            transition: var(--transicion);
+        }
+
+        .dropdown-item:hover {
+            background: rgba(46,125,50,0.05);
+            color: var(--verde-hoja);
         }
 
         .user-profile {
@@ -211,9 +230,29 @@
             font-weight: 600;
         }
 
+        /* Mensajes de alerta */
+        .alert {
+            border-radius: 50px;
+            padding: 15px 25px;
+            border: none;
+            margin-bottom: 20px;
+        }
+
+        .alert-success {
+            background: rgba(46,125,50,0.1);
+            color: var(--verde-hoja);
+            border: 1px solid rgba(46,125,50,0.2);
+        }
+
+        .alert-danger {
+            background: rgba(220,53,69,0.1);
+            color: #dc3545;
+            border: 1px solid rgba(220,53,69,0.2);
+        }
+
         /* Botones */
         .btn-naranja {
-            background: var(--naranja);
+            background: linear-gradient(135deg, var(--naranja), var(--naranja-oscuro));
             color: white;
             border: none;
             padding: 10px 25px;
@@ -223,12 +262,13 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            text-decoration: none;
         }
 
         .btn-naranja:hover {
-            background: var(--naranja-oscuro);
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(255,152,0,0.3);
+            color: white;
         }
 
         .btn-outline-verde {
@@ -239,6 +279,8 @@
             border-radius: 50px;
             font-weight: 600;
             transition: var(--transicion);
+            text-decoration: none;
+            display: inline-block;
         }
 
         .btn-outline-verde:hover {
@@ -417,6 +459,11 @@
             box-shadow: 0 0 10px var(--naranja);
         }
 
+        .sensor-status.danger {
+            background: #dc3545;
+            box-shadow: 0 0 10px #dc3545;
+        }
+
         .sensor-reading {
             display: flex;
             align-items: baseline;
@@ -504,6 +551,32 @@
             background: rgba(46,125,50,0.02);
         }
 
+        /* Estado vacío */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--sombra-suave);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: #999;
+            margin-bottom: 20px;
+        }
+
         /* Responsive */
         @media (max-width: 992px) {
             .dashboard {
@@ -531,15 +604,15 @@
         </div>
         <div class="sidebar-menu">
             <ul>
-                <li><a href="/dashboard"><i class="fas fa-home"></i> Vista general</a></li>
-                <li><a href="/cultivos')"><i class="fas fa-seedling"></i> Cultivos</a></li>
-                <li><a href="/siembras')"><i class="fas fa-sprout"></i> Siembras</a></li>
-                <li><a href="#" class="active"><i class="fas fa-thermometer-half"></i> Monitoreo</a></li>
-                <li><a href="#"><i class="fas fa-bell"></i> Alertas</a></li>
-                <li><a href="#"><i class="fas fa-file-alt"></i> Reportes</a></li>
-                <li><a href="#"><i class="fas fa-carrot"></i> Cosechas</a></li>
-                <li><a href="#"><i class="fas fa-chart-bar"></i> Evaluaciones</a></li>
-                <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
+                <li><a href="{{ route('dashboard') }}"><i class="fas fa-home"></i> Vista general</a></li>
+                <li><a href="{{ route('cultivos.index') }}"><i class="fas fa-seedling"></i> Cultivos</a></li>
+                <li><a href="{{ route('siembras.index') }}"><i class="fas fa-sprout"></i> Siembras</a></li>
+                <li><a href="{{ route('monitoreo.index') }}" class="active"><i class="fas fa-thermometer-half"></i> Monitoreo</a></li>
+                <li><a href="{{ route('alertas.index') }}"><i class="fas fa-bell"></i> Alertas</a></li>
+                <li><a href="{{ route('reportes.index') }}"><i class="fas fa-file-alt"></i> Reportes</a></li>
+                <li><a href="{{ route('cosechas.index') }}"><i class="fas fa-carrot"></i> Cosechas</a></li>
+                <li><a href="{{ route('evaluaciones.index') }}"><i class="fas fa-chart-bar"></i> Evaluaciones</a></li>
+                <li><a href="{{ route('configuracion.index') }}"><i class="fas fa-cog"></i> Configuración</a></li>
             </ul>
         </div>
     </div>
@@ -553,23 +626,58 @@
                 <p>Variables en tiempo real de tus cultivos</p>
             </div>
             <div class="header-actions">
-                <a href="#" class="notification-badge">
+                <a href="{{ route('alertas.index') }}" class="notification-badge">
                     <i class="fas fa-bell"></i>
-                    <span>3</span>
+                    @php
+                        $alertasCount = \App\Models\Alerta::where('user_id', auth()->id())->where('estado', 'Pendiente')->count();
+                    @endphp
+                    @if($alertasCount > 0)
+                        <span>{{ $alertasCount }}</span>
+                    @endif
                 </a>
-                <div class="user-profile">
-                    <img src="https://ui-avatars.com/api/?name=Christopher+Kevin&background=2E7D32&color=fff&size=40" alt="Profile">
-                    <span>Christopher</span>
-                    <i class="fas fa-chevron-down"></i>
+
+                <!-- Dropdown de usuario -->
+                <div class="dropdown">
+                    <div class="user-profile dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="{{ auth()->user()->avatar }}" alt="Profile">
+                        <span>{{ auth()->user()->nombre }}</span>
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="{{ route('configuracion.index') }}"><i class="fas fa-user me-2"></i>Mi Perfil</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item text-danger" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión
+                            </a>
+                        </li>
+                    </ul>
                 </div>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
             </div>
         </div>
+
+        <!-- Mensajes de sesión -->
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
         <!-- Tarjetas de resumen -->
         <div class="stats-grid">
             <div class="stat-card" data-aos="fade-up" data-aos-delay="50">
                 <div class="stat-info">
-                    <h3>23.5°C</h3>
+                    <h3>{{ $stats['temperatura']['valor'] ?? '23.5' }}°C</h3>
                     <p>Temperatura</p>
                 </div>
                 <div class="stat-icon">
@@ -578,7 +686,7 @@
             </div>
             <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
                 <div class="stat-info">
-                    <h3>65%</h3>
+                    <h3>{{ $stats['humedad_ambiente']['valor'] ?? '65' }}%</h3>
                     <p>Humedad ambiente</p>
                 </div>
                 <div class="stat-icon">
@@ -587,7 +695,7 @@
             </div>
             <div class="stat-card" data-aos="fade-up" data-aos-delay="150">
                 <div class="stat-info">
-                    <h3>4200 lux</h3>
+                    <h3>{{ $stats['luz']['valor'] ?? '4200' }} lux</h3>
                     <p>Luz</p>
                 </div>
                 <div class="stat-icon">
@@ -596,7 +704,7 @@
             </div>
             <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
                 <div class="stat-info">
-                    <h3>7.2</h3>
+                    <h3>{{ $stats['ph']['valor'] ?? '7.2' }}</h3>
                     <p>pH del suelo</p>
                 </div>
                 <div class="stat-icon">
@@ -605,7 +713,7 @@
             </div>
             <div class="stat-card" data-aos="fade-up" data-aos-delay="250">
                 <div class="stat-info">
-                    <h3>1200 ppm</h3>
+                    <h3>{{ $stats['nutrientes']['valor'] ?? '1200' }} ppm</h3>
                     <p>Nutrientes</p>
                 </div>
                 <div class="stat-icon">
@@ -619,10 +727,10 @@
             <div class="chart-card" data-aos="fade-right" data-aos-delay="100">
                 <div class="chart-header">
                     <h5><i class="fas fa-temperature-high"></i> Temperatura (°C) - Últimas 24h</h5>
-                    <select class="form-select-sm" style="width: auto;">
-                        <option>Hoy</option>
-                        <option>Ayer</option>
-                        <option>Semana</option>
+                    <select class="form-select-sm" style="width: auto;" id="tempPeriod" onchange="cargarDatosTemperatura()">
+                        <option value="24h" selected>Últimas 24h</option>
+                        <option value="7d">Última semana</option>
+                        <option value="30d">Último mes</option>
                     </select>
                 </div>
                 <canvas id="tempChart"></canvas>
@@ -630,10 +738,10 @@
             <div class="chart-card" data-aos="fade-left" data-aos-delay="200">
                 <div class="chart-header">
                     <h5><i class="fas fa-tint"></i> Humedad suelo (%) - Últimas 24h</h5>
-                    <select class="form-select-sm" style="width: auto;">
-                        <option>Hoy</option>
-                        <option>Ayer</option>
-                        <option>Semana</option>
+                    <select class="form-select-sm" style="width: auto;" id="humedadPeriod" onchange="cargarDatosHumedad()">
+                        <option value="24h" selected>Últimas 24h</option>
+                        <option value="7d">Última semana</option>
+                        <option value="30d">Último mes</option>
                     </select>
                 </div>
                 <canvas id="humedadChart"></canvas>
@@ -648,96 +756,47 @@
                     <i class="fas fa-sync-alt"></i> Actualizar
                 </button>
             </div>
-            <div class="sensores-grid">
-                <!-- Módulo 1 -->
-                <div class="sensor-card" data-aos="zoom-in" data-aos-delay="50">
-                    <div class="sensor-header">
-                        <h6>Módulo 1 - Lechuga</h6>
-                        <div class="sensor-status"></div>
-                    </div>
-                    <div class="sensor-reading">
-                        <span>Humedad suelo:</span>
-                        <span>68%</span>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar" style="width: 68%"></div>
-                    </div>
-                    <div class="sensor-reading mt-2">
-                        <span>Temperatura:</span>
-                        <span>23°C</span>
-                    </div>
-                    <div class="sensor-reading">
-                        <span>Luz:</span>
-                        <span>3800 lux</span>
-                    </div>
+
+            @if($modulos->count() > 0)
+                <div class="sensores-grid">
+                    @foreach($modulos as $modulo)
+                        @foreach($modulo->sensores as $sensor)
+                            <div class="sensor-card" data-aos="zoom-in" data-aos-delay="50">
+                                <div class="sensor-header">
+                                    <h6>{{ $modulo->nombre }} - {{ $sensor->nombre }}</h6>
+                                    @php
+                                        $estado = 'success';
+                                        if($sensor->tipo == 'Humedad' && $sensor->ultima_lectura < 30) $estado = 'danger';
+                                        elseif($sensor->tipo == 'Humedad' && $sensor->ultima_lectura < 50) $estado = 'warning';
+                                        elseif($sensor->tipo == 'Temperatura' && $sensor->ultima_lectura > 30) $estado = 'danger';
+                                    @endphp
+                                    <div class="sensor-status {{ $estado }}"></div>
+                                </div>
+                                <div class="sensor-reading">
+                                    <span>{{ $sensor->tipo }}:</span>
+                                    <span>{{ $sensor->ultima_lectura ?? '0' }}{{ $sensor->unidad }}</span>
+                                </div>
+                                <div class="progress">
+                                    @php
+                                        $porcentaje = $sensor->ultima_lectura ?? 0;
+                                        if($sensor->tipo == 'Temperatura') $porcentaje = ($porcentaje / 40) * 100;
+                                        if($sensor->tipo == 'Humedad') $porcentaje = $porcentaje;
+                                        if($sensor->tipo == 'Luz') $porcentaje = ($porcentaje / 10000) * 100;
+                                    @endphp
+                                    <div class="progress-bar" style="width: {{ min($porcentaje, 100) }}%"></div>
+                                </div>
+                                <small class="text-muted">Última lectura: {{ $sensor->ultima_lectura_at ? $sensor->ultima_lectura_at->diffForHumans() : 'Nunca' }}</small>
+                            </div>
+                        @endforeach
+                    @endforeach
                 </div>
-                <!-- Módulo 2 -->
-                <div class="sensor-card" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="sensor-header">
-                        <h6>Módulo 2 - Espinaca</h6>
-                        <div class="sensor-status warning"></div>
-                    </div>
-                    <div class="sensor-reading">
-                        <span>Humedad suelo:</span>
-                        <span>32%</span>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar" style="width: 32%"></div>
-                    </div>
-                    <div class="sensor-reading mt-2">
-                        <span>Temperatura:</span>
-                        <span>24°C</span>
-                    </div>
-                    <div class="sensor-reading">
-                        <span>Luz:</span>
-                        <span>4100 lux</span>
-                    </div>
+            @else
+                <div class="empty-state">
+                    <i class="fas fa-microchip"></i>
+                    <h3>No hay sensores registrados</h3>
+                    <p>Los sensores aparecerán aquí cuando estén configurados</p>
                 </div>
-                <!-- Módulo 3 -->
-                <div class="sensor-card" data-aos="zoom-in" data-aos-delay="150">
-                    <div class="sensor-header">
-                        <h6>Módulo 3 - Albahaca</h6>
-                        <div class="sensor-status"></div>
-                    </div>
-                    <div class="sensor-reading">
-                        <span>Humedad suelo:</span>
-                        <span>75%</span>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar" style="width: 75%"></div>
-                    </div>
-                    <div class="sensor-reading mt-2">
-                        <span>Temperatura:</span>
-                        <span>22°C</span>
-                    </div>
-                    <div class="sensor-reading">
-                        <span>Luz:</span>
-                        <span>3500 lux</span>
-                    </div>
-                </div>
-                <!-- Módulo 4 -->
-                <div class="sensor-card" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="sensor-header">
-                        <h6>Módulo 4 - Tomate</h6>
-                        <div class="sensor-status"></div>
-                    </div>
-                    <div class="sensor-reading">
-                        <span>Humedad suelo:</span>
-                        <span>70%</span>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar" style="width: 70%"></div>
-                    </div>
-                    <div class="sensor-reading mt-2">
-                        <span>Temperatura:</span>
-                        <span>23°C</span>
-                    </div>
-                    <div class="sensor-reading">
-                        <span>Luz:</span>
-                        <span>3900 lux</span>
-                    </div>
-                </div>
-            </div>
+            @endif
         </div>
 
         <!-- Lecturas recientes -->
@@ -752,53 +811,30 @@
                     <tr>
                         <th>Fecha/Hora</th>
                         <th>Módulo</th>
-                        <th>Temperatura</th>
-                        <th>Humedad suelo</th>
-                        <th>Luz</th>
-                        <th>pH</th>
+                        <th>Sensor</th>
+                        <th>Tipo</th>
+                        <th>Valor</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>25/02/2026 10:30</td>
-                        <td>Módulo 1</td>
-                        <td>23.2°C</td>
-                        <td>68%</td>
-                        <td>3800 lux</td>
-                        <td>7.2</td>
-                    </tr>
-                    <tr>
-                        <td>25/02/2026 10:30</td>
-                        <td>Módulo 2</td>
-                        <td>24.1°C</td>
-                        <td>32%</td>
-                        <td>4100 lux</td>
-                        <td>6.8</td>
-                    </tr>
-                    <tr>
-                        <td>25/02/2026 10:30</td>
-                        <td>Módulo 3</td>
-                        <td>22.5°C</td>
-                        <td>75%</td>
-                        <td>3500 lux</td>
-                        <td>7.0</td>
-                    </tr>
-                    <tr>
-                        <td>25/02/2026 10:30</td>
-                        <td>Módulo 4</td>
-                        <td>23.0°C</td>
-                        <td>70%</td>
-                        <td>3900 lux</td>
-                        <td>7.1</td>
-                    </tr>
-                    <tr>
-                        <td>25/02/2026 10:15</td>
-                        <td>Módulo 1</td>
-                        <td>23.1°C</td>
-                        <td>69%</td>
-                        <td>3750 lux</td>
-                        <td>7.2</td>
-                    </tr>
+                    @forelse($lecturasRecientes as $lectura)
+                        <tr>
+                            <td>{{ $lectura->created_at->format('d/m/Y H:i') }}</td>
+                            <td>{{ $lectura->modulo_nombre }}</td>
+                            <td>{{ $lectura->sensor_nombre }}</td>
+                            <td>{{ $lectura->tipo }}</td>
+                            <td>{{ $lectura->valor }}{{ $lectura->unidad }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="text-center py-4">
+                                <div class="empty-state">
+                                    <i class="fas fa-chart-line"></i>
+                                    <p>No hay lecturas registradas</p>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
                     </tbody>
                 </table>
             </div>
@@ -817,58 +853,104 @@
     });
 
     // Gráfico de temperatura
+    let tempChart;
     const ctxTemp = document.getElementById('tempChart').getContext('2d');
-    new Chart(ctxTemp, {
-        type: 'line',
-        data: {
-            labels: ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00'],
-            datasets: [{
-                label: '°C',
-                data: [22, 21, 20, 23, 26, 27, 25, 23],
-                borderColor: '#2E7D32',
-                backgroundColor: 'rgba(46,125,50,0.05)',
-                tension: 0.4,
-                fill: true,
-                pointBackgroundColor: '#2E7D32',
-                pointBorderColor: '#fff',
-                pointRadius: 4,
-                pointHoverRadius: 6
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: { y: { beginAtZero: false, grid: { color: 'rgba(0,0,0,0.03)' } } }
-        }
-    });
+
+    function cargarDatosTemperatura() {
+        let periodo = document.getElementById('tempPeriod').value;
+
+        // Aquí iría una llamada AJAX para obtener datos reales
+        // Por ahora usamos datos de ejemplo
+        let datos = {
+            '24h': [22, 21, 20, 23, 26, 27, 25, 23],
+            '7d': [21, 22, 23, 24, 25, 24, 23],
+            '30d': [20, 21, 22, 23, 24, 25, 24, 23, 22, 21]
+        };
+
+        let labels = {
+            '24h': ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00'],
+            '7d': ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+            '30d': ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4']
+        };
+
+        if (tempChart) tempChart.destroy();
+
+        tempChart = new Chart(ctxTemp, {
+            type: 'line',
+            data: {
+                labels: labels[periodo],
+                datasets: [{
+                    label: '°C',
+                    data: datos[periodo],
+                    borderColor: '#2E7D32',
+                    backgroundColor: 'rgba(46,125,50,0.05)',
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#2E7D32',
+                    pointBorderColor: '#fff',
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: false, grid: { color: 'rgba(0,0,0,0.03)' } } }
+            }
+        });
+    }
 
     // Gráfico de humedad
+    let humedadChart;
     const ctxHum = document.getElementById('humedadChart').getContext('2d');
-    new Chart(ctxHum, {
-        type: 'line',
-        data: {
-            labels: ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00'],
-            datasets: [{
-                label: '%',
-                data: [70, 68, 65, 63, 60, 58, 62, 65],
-                borderColor: '#FF9800',
-                backgroundColor: 'rgba(255,152,0,0.05)',
-                tension: 0.4,
-                fill: true,
-                pointBackgroundColor: '#FF9800',
-                pointBorderColor: '#fff',
-                pointRadius: 4,
-                pointHoverRadius: 6
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: { y: { beginAtZero: false, grid: { color: 'rgba(0,0,0,0.03)' } } }
-        }
-    });
+
+    function cargarDatosHumedad() {
+        let periodo = document.getElementById('humedadPeriod').value;
+
+        let datos = {
+            '24h': [70, 68, 65, 63, 60, 58, 62, 65],
+            '7d': [65, 68, 70, 67, 64, 62, 60],
+            '30d': [68, 70, 67, 65, 63, 62, 64, 66, 68, 70]
+        };
+
+        let labels = {
+            '24h': ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00'],
+            '7d': ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+            '30d': ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4']
+        };
+
+        if (humedadChart) humedadChart.destroy();
+
+        humedadChart = new Chart(ctxHum, {
+            type: 'line',
+            data: {
+                labels: labels[periodo],
+                datasets: [{
+                    label: '%',
+                    data: datos[periodo],
+                    borderColor: '#FF9800',
+                    backgroundColor: 'rgba(255,152,0,0.05)',
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#FF9800',
+                    pointBorderColor: '#fff',
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: false, grid: { color: 'rgba(0,0,0,0.03)' } } }
+            }
+        });
+    }
+
+    // Inicializar gráficos
+    cargarDatosTemperatura();
+    cargarDatosHumedad();
 </script>
 </body>
 </html>

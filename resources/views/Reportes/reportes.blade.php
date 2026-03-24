@@ -1,4 +1,4 @@
-{{-- resources/views/reportes.blade.php --}}
+{{-- resources/views/Reportes/reportes.blade.php --}}
     <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -37,7 +37,7 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: var(--fondo);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             color: #333;
             overflow-x: hidden;
         }
@@ -165,6 +165,7 @@
             font-size: 1.5rem;
             color: #666;
             transition: var(--transicion);
+            text-decoration: none;
         }
 
         .notification-badge:hover {
@@ -183,20 +184,31 @@
             border-radius: 10px;
         }
 
+        .dropdown-menu {
+            border: none;
+            box-shadow: var(--sombra-media);
+            border-radius: 15px;
+            padding: 10px 0;
+            margin-top: 10px;
+        }
+
+        .dropdown-item {
+            padding: 10px 20px;
+            transition: var(--transicion);
+        }
+
+        .dropdown-item:hover {
+            background: rgba(46,125,50,0.05);
+            color: var(--verde-hoja);
+        }
+
         .user-profile {
             display: flex;
             align-items: center;
             gap: 10px;
-            cursor: pointer;
             padding: 5px 15px;
             border-radius: 50px;
-            transition: var(--transicion);
             background: #f5f5f5;
-        }
-
-        .user-profile:hover {
-            background: #e0e0e0;
-            transform: translateY(-2px);
         }
 
         .user-profile img {
@@ -212,7 +224,7 @@
 
         /* Botones */
         .btn-naranja {
-            background: var(--naranja);
+            background: linear-gradient(135deg, var(--naranja), var(--naranja-oscuro));
             color: white;
             border: none;
             padding: 10px 25px;
@@ -222,12 +234,13 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            text-decoration: none;
         }
 
         .btn-naranja:hover {
-            background: var(--naranja-oscuro);
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(255,152,0,0.3);
+            color: white;
         }
 
         .btn-outline-verde {
@@ -238,6 +251,8 @@
             border-radius: 50px;
             font-weight: 600;
             transition: var(--transicion);
+            text-decoration: none;
+            display: inline-block;
         }
 
         .btn-outline-verde:hover {
@@ -431,10 +446,6 @@
             background: rgba(46,125,50,0.02);
         }
 
-        tr:hover td {
-            background: rgba(46,125,50,0.02);
-        }
-
         .badge-tipo {
             padding: 5px 12px;
             border-radius: 50px;
@@ -468,6 +479,7 @@
             color: white;
             transition: var(--transicion);
             border: none;
+            text-decoration: none;
         }
 
         .download-btn:hover {
@@ -482,6 +494,58 @@
 
         .btn-excel {
             background: #28a745;
+        }
+
+        /* Mensajes de alerta */
+        .alert {
+            border-radius: 50px;
+            padding: 15px 25px;
+            border: none;
+            margin-bottom: 20px;
+        }
+
+        .alert-success {
+            background: rgba(46,125,50,0.1);
+            color: var(--verde-hoja);
+            border: 1px solid rgba(46,125,50,0.2);
+        }
+
+        .alert-danger {
+            background: rgba(220,53,69,0.1);
+            color: #dc3545;
+            border: 1px solid rgba(220,53,69,0.2);
+        }
+
+        .alert-info {
+            background: rgba(100,181,246,0.1);
+            color: var(--azul-cielo);
+            border: 1px solid rgba(100,181,246,0.2);
+        }
+
+        /* Estado vacío */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--sombra-suave);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: #999;
+            margin-bottom: 20px;
         }
 
         /* Responsive */
@@ -514,15 +578,15 @@
         </div>
         <div class="sidebar-menu">
             <ul>
-                <li><a href="/dashboard"><i class="fas fa-home"></i> Vista general</a></li>
-                <li><a href="/cultivos"><i class="fas fa-seedling"></i> Cultivos</a></li>
-                <li><a href="/siembras"><i class="fas fa-sprout"></i> Siembras</a></li>
-                <li><a href="/monitoreo"><i class="fas fa-thermometer-half"></i> Monitoreo</a></li>
-                <li><a href="/alertas"><i class="fas fa-bell"></i> Alertas</a></li>
-                <li><a href="#" class="active"><i class="fas fa-file-alt"></i> Reportes</a></li>
-                <li><a href="/cosechas"><i class="fas fa-carrot"></i> Cosechas</a></li>
-                <li><a href="/evaluaciones"><i class="fas fa-chart-bar"></i> Evaluaciones</a></li>
-                <li><a href="/configuracion"><i class="fas fa-cog"></i> Configuración</a></li>
+                <li><a href="{{ route('dashboard') }}"><i class="fas fa-home"></i> Vista general</a></li>
+                <li><a href="{{ route('cultivos.index') }}"><i class="fas fa-seedling"></i> Cultivos</a></li>
+                <li><a href="{{ route('siembras.index') }}"><i class="fas fa-sprout"></i> Siembras</a></li>
+                <li><a href="{{ route('monitoreo.index') }}"><i class="fas fa-thermometer-half"></i> Monitoreo</a></li>
+                <li><a href="{{ route('alertas.index') }}"><i class="fas fa-bell"></i> Alertas</a></li>
+                <li><a href="{{ route('reportes.index') }}" class="active"><i class="fas fa-file-alt"></i> Reportes</a></li>
+                <li><a href="{{ route('cosechas.index') }}"><i class="fas fa-carrot"></i> Cosechas</a></li>
+                <li><a href="{{ route('evaluaciones.index') }}"><i class="fas fa-chart-bar"></i> Evaluaciones</a></li>
+                <li><a href="{{ route('configuracion.index') }}"><i class="fas fa-cog"></i> Configuración</a></li>
             </ul>
         </div>
     </div>
@@ -536,23 +600,51 @@
                 <p>Genera y descarga informes detallados de tu actividad</p>
             </div>
             <div class="header-actions">
-                <a href="#" class="notification-badge">
+                <a href="{{ route('alertas.index') }}" class="notification-badge">
                     <i class="fas fa-bell"></i>
-                    <span>3</span>
+                    @php
+                        $alertasCount = \App\Models\Alerta::where('user_id', auth()->id())->where('estado', 'Pendiente')->count();
+                    @endphp
+                    @if($alertasCount > 0)
+                        <span>{{ $alertasCount }}</span>
+                    @endif
                 </a>
+
+                <!-- Perfil de usuario (solo visual) -->
                 <div class="user-profile">
-                    <img src="https://ui-avatars.com/api/?name=Christopher+Kevin&background=2E7D32&color=fff&size=40" alt="Profile">
-                    <span>Christopher</span>
-                    <i class="fas fa-chevron-down"></i>
+                    <img src="{{ auth()->user()->avatar }}" alt="Profile">
+                    <span>{{ auth()->user()->nombre }}</span>
                 </div>
             </div>
         </div>
+
+        <!-- Mensajes de sesión -->
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if(session('info'))
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <i class="fas fa-info-circle me-2"></i>{{ session('info') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
         <!-- Stats Cards -->
         <div class="stats-grid">
             <div class="stat-card" data-aos="fade-up" data-aos-delay="50">
                 <div class="stat-info">
-                    <h3>24</h3>
+                    <h3>{{ $stats['total'] }}</h3>
                     <p>Reportes generados</p>
                     <small>Este mes</small>
                 </div>
@@ -562,7 +654,7 @@
             </div>
             <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
                 <div class="stat-info">
-                    <h3>12</h3>
+                    <h3>{{ $stats['pendientes'] }}</h3>
                     <p>Pendientes</p>
                     <small>Por generar</small>
                 </div>
@@ -572,7 +664,7 @@
             </div>
             <div class="stat-card" data-aos="fade-up" data-aos-delay="150">
                 <div class="stat-info">
-                    <h3>8</h3>
+                    <h3>{{ $stats['descargados'] }}</h3>
                     <p>Descargados</p>
                     <small>Última semana</small>
                 </div>
@@ -582,9 +674,9 @@
             </div>
             <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
                 <div class="stat-info">
-                    <h3>PDF</h3>
+                    <h3>{{ $stats['formato_preferido'] }}</h3>
                     <p>Formato preferido</p>
-                    <small>80% de reportes</small>
+                    <small>{{ $stats['total'] > 0 ? round(($stats['descargados'] / max($stats['total'], 1)) * 100) : 0 }}% de reportes</small>
                 </div>
                 <div class="stat-icon">
                     <i class="fas fa-file-pdf"></i>
@@ -595,48 +687,50 @@
         <!-- Panel de filtros para generar reportes -->
         <div class="filters-panel" data-aos="fade-up" data-aos-delay="100">
             <h3><i class="fas fa-sliders-h"></i> Generar nuevo reporte</h3>
-            <div class="filter-row">
-                <div class="filter-group">
-                    <label>Tipo de reporte</label>
-                    <select>
-                        <option>Reporte de cultivos</option>
-                        <option>Reporte de siembras</option>
-                        <option>Reporte de cosechas</option>
-                        <option>Reporte de monitoreo</option>
-                        <option>Reporte de alertas</option>
-                    </select>
+            <form action="{{ route('reportes.generar') }}" method="GET">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label>Tipo de reporte</label>
+                        <select name="tipo" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="cultivos">Reporte de cultivos</option>
+                            <option value="siembras">Reporte de siembras</option>
+                            <option value="cosechas">Reporte de cosechas</option>
+                            <option value="monitoreo">Reporte de monitoreo</option>
+                            <option value="alertas">Reporte de alertas</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Período</label>
+                        <select name="periodo" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="semana">Última semana</option>
+                            <option value="mes">Último mes</option>
+                            <option value="trimestre">Último trimestre</option>
+                            <option value="año">Último año</option>
+                            <option value="personalizado">Personalizado</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Formato</label>
+                        <select name="formato" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="PDF">PDF</option>
+                            <option value="Excel">Excel</option>
+                            <option value="CSV">CSV</option>
+                        </select>
+                    </div>
+                    <div class="filter-actions">
+                        <button type="submit" class="btn-naranja"><i class="fas fa-file-export"></i> Generar</button>
+                    </div>
                 </div>
-                <div class="filter-group">
-                    <label>Período</label>
-                    <select>
-                        <option>Última semana</option>
-                        <option>Último mes</option>
-                        <option>Último trimestre</option>
-                        <option>Último año</option>
-                        <option>Personalizado</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label>Formato</label>
-                    <select>
-                        <option>PDF</option>
-                        <option>Excel</option>
-                        <option>CSV</option>
-                    </select>
-                </div>
-                <div class="filter-actions">
-                    <button class="btn-naranja"><i class="fas fa-file-export"></i> Generar</button>
-                </div>
-            </div>
+            </form>
         </div>
 
         <!-- Tabla de reportes generados -->
         <div class="table-container" data-aos="fade-up" data-aos-delay="200">
             <div class="table-header">
                 <h2><i class="fas fa-history"></i> Reportes recientes</h2>
-                <div class="d-flex gap-2">
-                    <button class="btn-outline-verde"><i class="fas fa-filter"></i> Filtrar</button>
-                </div>
             </div>
             <div class="table-responsive">
                 <table>
@@ -652,84 +746,60 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>#RPT-001</td>
-                        <td>Reporte de cultivos - Marzo 2025</td>
-                        <td><span class="badge-tipo badge-semanal">Semanal</span></td>
-                        <td>25/03/2025</td>
-                        <td>18/03 - 25/03</td>
-                        <td>2.4 MB</td>
-                        <td>
-                            <button class="download-btn"><i class="fas fa-download"></i></button>
-                            <button class="download-btn btn-pdf"><i class="fas fa-file-pdf"></i></button>
-                            <button class="download-btn btn-excel"><i class="fas fa-file-excel"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#RPT-002</td>
-                        <td>Monitoreo ambiental - Marzo 2025</td>
-                        <td><span class="badge-tipo badge-mensual">Mensual</span></td>
-                        <td>24/03/2025</td>
-                        <td>01/03 - 24/03</td>
-                        <td>5.1 MB</td>
-                        <td>
-                            <button class="download-btn"><i class="fas fa-download"></i></button>
-                            <button class="download-btn btn-pdf"><i class="fas fa-file-pdf"></i></button>
-                            <button class="download-btn btn-excel"><i class="fas fa-file-excel"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#RPT-003</td>
-                        <td>Alertas y notificaciones</td>
-                        <td><span class="badge-tipo badge-semanal">Semanal</span></td>
-                        <td>23/03/2025</td>
-                        <td>16/03 - 23/03</td>
-                        <td>1.2 MB</td>
-                        <td>
-                            <button class="download-btn"><i class="fas fa-download"></i></button>
-                            <button class="download-btn btn-pdf"><i class="fas fa-file-pdf"></i></button>
-                            <button class="download-btn btn-excel"><i class="fas fa-file-excel"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#RPT-004</td>
-                        <td>Rendimiento de siembras</td>
-                        <td><span class="badge-tipo badge-mensual">Mensual</span></td>
-                        <td>20/03/2025</td>
-                        <td>01/03 - 20/03</td>
-                        <td>3.7 MB</td>
-                        <td>
-                            <button class="download-btn"><i class="fas fa-download"></i></button>
-                            <button class="download-btn btn-pdf"><i class="fas fa-file-pdf"></i></button>
-                            <button class="download-btn btn-excel"><i class="fas fa-file-excel"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#RPT-005</td>
-                        <td>Cosechas del mes</td>
-                        <td><span class="badge-tipo badge-anual">Anual</span></td>
-                        <td>15/03/2025</td>
-                        <td>Enero - Marzo</td>
-                        <td>8.3 MB</td>
-                        <td>
-                            <button class="download-btn"><i class="fas fa-download"></i></button>
-                            <button class="download-btn btn-pdf"><i class="fas fa-file-pdf"></i></button>
-                            <button class="download-btn btn-excel"><i class="fas fa-file-excel"></i></button>
-                        </td>
-                    </tr>
+                    @forelse($reportes as $reporte)
+                        <tr>
+                            <td>#RPT-{{ str_pad($reporte->id, 3, '0', STR_PAD_LEFT) }}</td>
+                            <td>{{ $reporte->nombre }}</td>
+                            <td>
+                                <span class="badge-tipo
+                                    @if($reporte->tipo == 'semanal' || str_contains($reporte->nombre, 'semanal')) badge-semanal
+                                    @elseif($reporte->tipo == 'mensual' || str_contains($reporte->nombre, 'mensual')) badge-mensual
+                                    @else badge-anual
+                                    @endif">
+                                    {{ ucfirst($reporte->tipo) }}
+                                </span>
+                            </td>
+                            <td>{{ $reporte->created_at->format('d/m/Y') }}</td>
+                            <td>
+                                @if($reporte->periodo_inicio && $reporte->periodo_fin)
+                                    {{ $reporte->periodo_inicio->format('d/m') }} - {{ $reporte->periodo_fin->format('d/m/Y') }}
+                                @else
+                                    N/A
+                                @endif
+                            </td>
+                            <td>{{ $reporte->tamaño_formateado }}</td>
+                            <td>
+                                <a href="{{ route('reportes.descargar', $reporte->id) }}" class="download-btn" title="Descargar" onclick="return confirm('¿Descargar el reporte: {{ $reporte->nombre }}?')">
+                                    <i class="fas fa-download"></i>
+                                </a>
+                                <a href="{{ route('reportes.ver-pdf', $reporte->id) }}" class="download-btn btn-pdf" title="Ver PDF" onclick="return confirm('Funcionalidad de visualización en desarrollo. ¿Quieres continuar?')">
+                                    <i class="fas fa-file-pdf"></i>
+                                </a>
+                                <form action="{{ route('reportes.destroy', $reporte->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('¿Estás seguro de eliminar este reporte? Esta acción no se puede deshacer.')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="download-btn" style="background: #dc3545;" title="Eliminar">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="7" class="text-center py-5">
+                                <div class="empty-state">
+                                    <i class="fas fa-file-alt"></i>
+                                    <h3>No hay reportes generados</h3>
+                                    <p>Genera tu primer reporte usando el formulario de arriba</p>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
                     </tbody>
                 </table>
             </div>
             <div class="d-flex justify-content-end mt-3">
-                <nav>
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a class="page-link" href="#">Anterior</a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
-                    </ul>
-                </nav>
+                {{ $reportes->links() }}
             </div>
         </div>
     </div>
