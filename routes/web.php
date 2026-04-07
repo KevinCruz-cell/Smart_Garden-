@@ -12,7 +12,7 @@ use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\CosechaController;
 use App\Http\Controllers\EvaluacionController;
 use App\Http\Controllers\ConfiguracionController;
-
+use App\Http\Controllers\AuditoriaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -107,4 +107,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/configuracion/riego', [ConfiguracionController::class, 'updateRiego'])->name('configuracion.riego');
     Route::put('/configuracion/perfil', [ConfiguracionController::class, 'updatePerfil'])->name('configuracion.perfil');
     Route::put('/configuracion/seguridad', [ConfiguracionController::class, 'updateSeguridad'])->name('configuracion.seguridad');
+
+    Route::get('/auditoria', [AuditoriaController::class, 'index'])
+        ->name('auditoria.index');
+
 });
